@@ -1,5 +1,5 @@
-import { Flex, Icon, Link, Text } from '@chakra-ui/react';
-import { FaGithub } from 'react-icons/fa';
+import { Flex, Icon, Link, Text } from "@chakra-ui/react";
+import { FaGithub } from "react-icons/fa";
 
 const AuthorBanner = () => {
   return (
@@ -11,7 +11,7 @@ const AuthorBanner = () => {
       borderTop="0px"
     >
       <Flex textAlign="center" align="center" fontSize="14px">
-        <Text color="white" mt="0.5">
+        {/* <Text color="white" mt="0.5">
           Code challenge by{' '}
           <Link
             href="https://www.frontendmentor.io"
@@ -51,7 +51,7 @@ const AuthorBanner = () => {
             transition="0.2s"
             _hover={{ color: 'primary.peach' }}
           />
-        </Link>
+        </Link> */}
       </Flex>
     </Flex>
   );

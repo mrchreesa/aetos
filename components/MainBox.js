@@ -1,10 +1,10 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-import NextImage from 'next/image';
-import PropTypes from 'prop-types';
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import NextImage from "next/image";
+import PropTypes from "prop-types";
 
-import { maxScreenWidth } from '../constants/style';
+import { maxScreenWidth } from "../constants/style";
 
-import PatternDivider from './patterns/PatternDivider';
+import PatternDivider from "./patterns/PatternDivider";
 
 const MainBox = ({
   isFirst,
@@ -20,7 +20,7 @@ const MainBox = ({
   const mobileOffsetY = 75;
   const tabletOffsetY = 100;
   const desktopOffsetY = 70;
-  const isLeftImage = imageSide === 'left';
+  const isLeftImage = imageSide === "left";
 
   return (
     <Box mx="auto" w="full" pos="relative">
@@ -29,38 +29,38 @@ const MainBox = ({
           w="full"
           pos="absolute"
           h={{
-            md: isLeftImage ? '490px' : '770px',
-            lg: '600px',
-            xl: isLeftImage ? '600px' : '650px',
+            md: isLeftImage ? "490px" : "770px",
+            lg: "600px",
+            xl: isLeftImage ? "600px" : "650px",
           }}
           bgImage="/images/pattern-curve-top-right.svg"
           bgRepeat="no-repeat"
           bgSize={{
-            md: '100%',
-            lg: '60%',
-            xl: isLeftImage ? '895px 320px' : '895px 650px',
+            md: "100%",
+            lg: "60%",
+            xl: isLeftImage ? "895px 320px" : "895px 650px",
           }}
           bgPos={{
-            base: '0 0',
-            sm: '80px -50px',
-            md: isLeftImage ? '-380px 200px' : '-380px 490px',
-            lg: isLeftImage ? '-50px 50px' : '-50px 50px',
-            xl: isLeftImage ? '0 280px' : '0 170px',
+            base: "0 0",
+            sm: "80px -150px",
+            md: isLeftImage ? "-380px 200px" : "-380px 490px",
+            lg: isLeftImage ? "-50px 50px" : "-50px 50px",
+            xl: isLeftImage ? "0 280px" : "0 170px",
           }}
-          transform={isLeftImage ? '' : 'rotate(1turn) scale(-1, 1)'}
+          transform={isLeftImage ? "" : "rotate(1turn) scale(-1, 1)"}
         />
       )}
 
       <Flex
         direction={{
-          base: 'column',
-          lg: isLeftImage ? 'row' : 'row-reverse',
+          base: "column",
+          lg: isLeftImage ? "row" : "row-reverse",
         }}
         justify="space-between"
-        px={{ base: 6, md: 10, lg: 20, xl: 0 }}
+        px={{ base: 6, md: 10, lg: 0, xl: 0 }}
         py={{ base: 12, sm: 0 }}
         pos="relative"
-        maxW={{ lg: '960px', xl: maxScreenWidth }}
+        maxW={{ lg: "960px", xl: maxScreenWidth }}
         mx="auto"
       >
         {/* Image */}
@@ -72,7 +72,9 @@ const MainBox = ({
             top={{
               base: 0,
               sm: isFirst ? -mobileOffsetY : 0,
+              lg: 20,
             }}
+            ml={{ base: 0, md: "-50px" }}
             w={imageMobile.width / 2}
             h={{
               base: imageMobile / 2,
@@ -82,11 +84,11 @@ const MainBox = ({
               lg: imageMobile.height / 2 - mobileOffsetY,
             }}
             display={{
-              base: 'inline-flex',
-              sm: 'block',
-              md: 'none',
-              lg: 'block',
-              xl: 'none',
+              base: "inline-flex",
+              sm: "block",
+              md: "none",
+              lg: "block",
+              xl: "none",
             }}
           >
             <NextImage src={imageMobile} alt={alt} placeholder="blur" />
@@ -95,7 +97,7 @@ const MainBox = ({
                 pos="absolute"
                 top="50px"
                 right="-70px"
-                display={{ base: 'none', md: 'none', lg: 'block' }}
+                display={{ base: "none", md: "none", lg: "block" }}
               >
                 <NextImage
                   src="/images/pattern-lines.svg"
@@ -119,7 +121,7 @@ const MainBox = ({
                 ? imageTablet.height / 2 - tabletOffsetY
                 : imageTablet.height / 2
             }
-            display={{ base: 'none', md: 'block', lg: 'none' }}
+            display={{ base: "none", md: "block", lg: "none" }}
             zIndex="1"
           >
             <NextImage src={imageTablet} alt={alt} placeholder="blur" />
@@ -144,7 +146,7 @@ const MainBox = ({
             bottom={isLeftImage ? 0 : desktopOffsetY}
             w={imageDesktop.width / 2}
             h={imageDesktop.height / 2 - desktopOffsetY}
-            display={{ base: 'none', xl: 'block' }}
+            display={{ base: "none", xl: "block" }}
             zIndex="overlay"
           >
             <NextImage
@@ -169,24 +171,24 @@ const MainBox = ({
         {/* Content */}
         <Flex
           direction="column"
-          align={{ base: 'center', lg: 'flex-start' }}
+          align={{ base: "center", lg: "flex-start" }}
           justify="center"
-          textAlign={{ base: 'center', lg: 'left' }}
-          pl={{ lg: isLeftImage ? '60px' : 0 }}
+          textAlign={{ base: "center", lg: "left" }}
+          pl={{ lg: isLeftImage ? "35px" : 0 }}
           mb={{
-            sm: !isLeftImage ? '70px' : 0,
-            md: !isLeftImage ? '120px' : 0,
-            lg: !isLeftImage ? '60px' : 0,
+            sm: !isLeftImage ? "70px" : 0,
+            md: !isLeftImage ? "120px" : 0,
+            lg: !isLeftImage ? "60px" : 0,
           }}
           zIndex="overlay"
         >
           <PatternDivider paddingY="45px" />
-          <Box maxW={{ base: '375px', xl: '445px' }}>
+          <Box maxW={{ base: "375px", xl: "445px" }}>
             <Heading as="h2" variant="h2" color="primary.codgray" maxW="400px">
               {title}
             </Heading>
             <Text
-              textStyle={{ base: 'body2', xl: 'body1' }}
+              textStyle={{ base: "body2", xl: "body1" }}
               color="primary.codgray"
             >
               {text}
@@ -209,7 +211,7 @@ MainBox.propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
   }).isRequired,
-  imageSide: PropTypes.oneOf(['right', 'left']).isRequired,
+  imageSide: PropTypes.oneOf(["right", "left"]).isRequired,
   imageTablet: PropTypes.shape({
     height: PropTypes.number,
     width: PropTypes.number,

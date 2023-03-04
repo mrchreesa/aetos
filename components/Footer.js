@@ -1,10 +1,10 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
+import { Box, Flex, Text } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-import { maxScreenWidth } from '../constants/style';
-import AuthorBanner from './AuthorBanner';
+import { maxScreenWidth } from "../constants/style";
+import AuthorBanner from "./AuthorBanner";
 
-import Logo from './Logo';
+import Logo from "./Logo";
 
 const Footer = () => {
   const TextBlock = (props) => {
@@ -12,7 +12,7 @@ const Footer = () => {
 
     return (
       <Box
-        textAlign={{ base: 'center', md: 'left' }}
+        textAlign={{ base: "center", md: "left" }}
         textTransform="uppercase"
         mb="6"
         fontSize="14px"
@@ -34,11 +34,11 @@ const Footer = () => {
       <Flex role="contentinfo" bg="primary.codgray">
         <Flex
           color="white"
-          direction={{ base: 'column', md: 'row' }}
-          align={{ base: 'center', md: 'flex-start' }}
+          direction={{ base: "column", md: "row" }}
+          align={{ base: "center" }}
           justify="space-between"
           px={{ base: 6, md: 16, xl: 0 }}
-          py={{ base: 16, xl: 20 }}
+          py={{ base: 2, xl: 4 }}
           mx="auto"
           maxW={maxScreenWidth}
           w="full"
@@ -47,27 +47,32 @@ const Footer = () => {
             <Logo />
           </Box>
 
-          <Flex direction={{ base: 'column', lg: 'row' }}>
-            <TextBlock>
-              Marthwaite, Sedbergh
+          <Flex
+            justify="center"
+            textAlign="center"
+            align={{ base: "center" }}
+            direction={{ base: "column", md: "row" }}
+            display={{ base: "none", md: "flex" }}
+          >
+            <Text color="#fcbc5a" fontSize="sm" mr="8">
+              156A Seven Sisters Road
               <br />
-              Cumbria
+              N7 7PL, London, UK
               <br />
-              +00 44 123 4567
+              02072635582
               <br />
-            </TextBlock>
-
-            <TextBlock ml={{ lg: 24, xl: 32 }}>
-              OPEN TIMES <br />
-              MON - FRI: 09:00 AM - 10:00 PM
+            </Text>
+            <Text color="#fcbc5a" fontSize="sm">
+              Opening Times <br />
+              SUN - THU: 10:00 AM - 11:00 PM
               <br />
-              SAT - SUN: 09:00 AM - 11:30PM
+              FRI - SAT: 10:00 AM - 02:00 AM
               <br />
-            </TextBlock>
+            </Text>
           </Flex>
         </Flex>
       </Flex>
-      <AuthorBanner />
+      {/* <AuthorBanner /> */}
     </>
   );
 };
