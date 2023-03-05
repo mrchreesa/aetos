@@ -7,8 +7,8 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import fish from "../assets/homepage/fish.jpg";
-import salad from "../assets/homepage/salad.jpg";
+import fish from "../assets/homepage/fish.JPG";
+import salad from "../assets/homepage/salad.JPG";
 import burger from "../assets/homepage/burger.jpg";
 import meze from "../assets/homepage/meze.jpg";
 import { maxScreenWidth } from "../constants/style";
