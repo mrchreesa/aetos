@@ -39,7 +39,7 @@ const BookingModal = ({ isOpen, onClose, bookingData }) => {
             >
               <Heading as="h2" variant="h3l" mb="8" fontSize="2xl">
                 Thank you! <br />
-                You'll receive a confirmation email shortly!
+                You will receive a confirmation email shortly!
               </Heading>
 
               <Table variant="simple" size="sm">
