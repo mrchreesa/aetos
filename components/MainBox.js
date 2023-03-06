@@ -3,6 +3,7 @@ import NextImage from "next/image";
 import PropTypes from "prop-types";
 
 import { maxScreenWidth } from "../constants/style";
+import Parallax from "./Parallax";
 
 import PatternDivider from "./patterns/PatternDivider";
 
@@ -109,7 +110,6 @@ const MainBox = ({
               </Box>
             )}
           </Box>
-
           {/* tablet version (md) */}
           <Box
             shadow="2xl"
@@ -125,6 +125,7 @@ const MainBox = ({
             zIndex="1"
           >
             <NextImage src={imageTablet} alt={alt} placeholder="blur" />
+
             {!isLeftImage && (
               <Box pos="absolute" bottom="50px" right="-60px">
                 <NextImage
@@ -137,7 +138,6 @@ const MainBox = ({
               </Box>
             )}
           </Box>
-
           {/* desktop version (xl) */}
           <Box
             shadow="2xl"
@@ -164,8 +164,8 @@ const MainBox = ({
                   alt=""
                 />
               </Box>
-            )}
-          </Box>
+            )}{" "}
+          </Box>{" "}
         </Flex>
 
         {/* Content */}

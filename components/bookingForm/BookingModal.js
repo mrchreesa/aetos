@@ -14,8 +14,8 @@ import {
   Tr,
   Td,
   TableCaption,
-} from '@chakra-ui/react';
-import PropTypes from 'prop-types';
+} from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
 const BookingModal = ({ isOpen, onClose, bookingData }) => {
   return (
@@ -38,23 +38,19 @@ const BookingModal = ({ isOpen, onClose, bookingData }) => {
               textAlign="center"
             >
               <Heading as="h2" variant="h3l" mb="8" fontSize="2xl">
-                Your reservation is confirmed
+                Thank you! <br />
+                You'll receive a confirmation email shortly!
               </Heading>
 
               <Table variant="simple" size="sm">
                 <TableCaption>
-                  Dine
+                  Aetos Greek Taverna
                   <br />
-                  Marthwaite, Sedbergh. Cumbria
+                  156A Seven Sisters Road
                   <br />
-                  +00 44 123 4567
+                  N7 7PL, London, UK
                   <br />
-                  <br />
-                  OPEN TIMES <br />
-                  MON - FRI: 09:00 AM - 10:00 PM
-                  <br />
-                  SAT - SUN: 09:00 AM - 11:30PM
-                  <br />
+                  02072635582
                 </TableCaption>
                 <Thead>
                   <Tr>
@@ -73,27 +69,6 @@ const BookingModal = ({ isOpen, onClose, bookingData }) => {
                   </Tr>
                 </Tbody>
               </Table>
-
-              {/* <Text textStyle="body2">
-                Reservation name:{' '}
-                <chakra.span fontWeight="semibold" ml="1">
-                  {bookingData.name}
-                </chakra.span>
-              </Text>
-
-              <Text textStyle="body2">
-                Email:{' '}
-                <chakra.span fontWeight="semibold" ml="1">
-                  {bookingData.email}
-                </chakra.span>
-              </Text>
-
-              <Text textStyle="body2">
-                Table for:{' '}
-                <chakra.span fontWeight="semibold" ml="1">
-                  {bookingData.seats}
-                </chakra.span>
-              </Text> */}
             </Flex>
           )}
         </ModalBody>

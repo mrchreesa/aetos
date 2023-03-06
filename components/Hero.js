@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NavBar from "./NavBar";
+import Parallax from "./Parallax";
 // import dishImageDesktop from "../assets/homepage/musaka-bg-desktop.JPG";
 import dishImageDesktop from "../assets/homepage/musaka-circle1.png";
 
@@ -31,13 +32,17 @@ const Hero = () => {
         right="0"
         zIndex="base"
         opacity={0.85}
+        overflow="hidden"
       >
-        <NextImage
-          src={dishImageDesktop}
-          alt="Dine hero desktop image"
-          objectFit="cover"
-          objectPosition="bottom"
-        />
+        <Parallax>
+          {/* <img src={dishImageDesktop} alt="" /> */}
+          <NextImage
+            src={dishImageDesktop}
+            alt="Dine hero desktop image"
+            objectFit="cover"
+            objectPosition="bottom"
+          />
+        </Parallax>
       </Box>
 
       <Flex
@@ -51,16 +56,25 @@ const Hero = () => {
         <NavBar />
 
         {/* Hero bg image mobile */}
-        <Box display={{ base: "inline-flex", md: "none" }} mt="70px">
-          <NextImage src={dishImageMobile} alt="Dine hero mobile image" />
+        <Box
+          display={{ base: "inline-flex", md: "none" }}
+          mt="70px"
+          overflow="hidden"
+        >
+          <Parallax>
+            <NextImage src={dishImageMobile} alt="Dine hero mobile image" />
+          </Parallax>
         </Box>
 
         {/* Hero bg image tablet */}
         <Box
           display={{ base: "none", md: "inline-flex", lg: "none" }}
           mt="70px"
+          overflow="hidden"
         >
-          <NextImage src={dishImageTablet} alt="Dine hero tablet image" />
+          <Parallax>
+            <NextImage src={dishImageTablet} alt="Dine hero tablet image" />
+          </Parallax>
         </Box>
 
         {/* Hero content */}
@@ -82,6 +96,7 @@ const Hero = () => {
           align={{ base: "center", lg: "flex-start" }}
           textAlign={{ base: "center", lg: "left" }}
           zIndex="docked"
+          overflow="hidden"
         >
           <Box
             display={{ base: "none", lg: "block" }}
@@ -94,34 +109,34 @@ const Hero = () => {
           >
             <Logo />
           </Box>
+          <Parallax>
+            <Heading
+              as="h1"
+              variant="h1"
+              color="white"
+              mb="6"
+              maxW={{ md: "400px", lg: "500px", xl: "600px" }}
+              fontFamily="Baskervillle"
+              fontSize="100px"
+              letterSpacing="10px"
+            >
+              AETOS
+            </Heading>
 
-          <Heading
-            as="h1"
-            variant="h1"
-            color="white"
-            mb="6"
-            maxW={{ md: "400px", lg: "500px", xl: "600px" }}
-            fontFamily="Baskervillle"
-            fontSize="100px"
-            letterSpacing="10px"
-          >
-            AETOS
-          </Heading>
-
-          <Text
-            color="white"
-            fontSize="20px"
-            textStyle={{ base: "body2", xl: "body1" }}
-            mb={{ base: 6, lg: 8, xl: 10 }}
-            maxW={{ base: "400px", xl: "500px" }}
-          >
-            The perfect place to experience the rich flavours and hospitality of
-            Greece.
-          </Text>
-
-          <CustomLink variant="dark" href="/booking" mb="20">
-            MAKE A RESERVATION
-          </CustomLink>
+            <Text
+              color="white"
+              fontSize="20px"
+              textStyle={{ base: "body2", xl: "body1" }}
+              mb={{ base: 6, lg: 8, xl: 10 }}
+              maxW={{ base: "400px", xl: "500px" }}
+            >
+              The perfect place to experience the rich flavours and hospitality
+              of Greece.
+            </Text>
+            <CustomLink variant="dark" href="/booking" mb="20">
+              MAKE A RESERVATION
+            </CustomLink>
+          </Parallax>
         </Flex>
       </Flex>
     </Box>

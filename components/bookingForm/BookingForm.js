@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { useState } from 'react';
-
+import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -9,27 +9,28 @@ import {
   Stack,
   Text,
   useDisclosure,
-} from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import NextImage from 'next/image';
-import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+} from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import NextImage from "next/image";
+import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 import {
   hoursList,
   minutesList,
   monthsList,
   yearsList,
-} from '../../constants/datetime';
+} from "../../constants/datetime";
 
-import BookingModal from './BookingModal';
-import CustomInput from './CustomInput';
-import CustomSelect from './CustomSelect';
+import BookingModal from "./BookingModal";
+import CustomInput from "./CustomInput";
+import CustomSelect from "./CustomSelect";
 
 const schema = yup.object().shape({
-  name: yup.string().required('A name is required'),
-  email: yup.string().email().required('An email is required'),
+  name: yup.string().required("A name is required"),
+  email: yup.string().email().required("An email is required"),
+  phone: yup.number().required("The phone number is required"),
   month: yup.number().required(),
   day: yup.number().required(),
   year: yup.number().required(),
@@ -69,15 +70,47 @@ const BookingForm = () => {
       const updatedValues = { seats: seats, ...values };
 
       setReservation(updatedValues);
-      setTimeout(() => {
-        resolve();
-        onOpen();
-        reset();
-        setSeats(1);
-      }, 1000);
+      axios
+        .post(`/api/contact`, updatedValues)
+        .then((response) => {
+          // setLoading(false);
+          console.log(response);
+          if (response.status === 201) {
+            setTimeout(() => {
+              resolve();
+              onOpen();
+              reset();
+              setSeats(1);
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              alert("Something went wrong, please try again");
+              resolve();
+              reset();
+              setSeats(1);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(() => {
+            alert("Something went wrong, please try again");
+            resolve();
+            reset();
+            setSeats(1);
+          }, 1000);
+        });
     });
   }
-
+  // const sendEmail = (formValues) => {
+  //   axios
+  //     .post(`/api/contact`, formValues)
+  //     .then((response) => {
+  //       // setLoading(false);
+  //       console.log(response);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
   function handleSeatsDecrement() {
     if (seats > 1) {
       setSeats(seats - 1);
@@ -92,19 +125,19 @@ const BookingForm = () => {
 
   const CustomFormHeading = ({ title }) => (
     <Flex
-      w={{ md: '200px' }}
+      w={{ md: "200px" }}
       direction="column"
-      align={{ base: 'center', m: 'flex-start' }}
-      justify={{ base: 'flex-start', md: 'center' }}
+      align={{ base: "center", m: "flex-start" }}
+      justify={{ base: "flex-start", md: "center" }}
     >
       <Text
         textStyle="body1"
-        color={errorDate || errorTime ? 'red.500' : 'primary.codgray'}
+        color={errorDate || errorTime ? "red.500" : "primary.codgray"}
       >
         {title}
       </Text>
       <Text fontSize="11px" color="red.500">
-        {(errorDate || errorTime) && 'This field is incomplete'}
+        {(errorDate || errorTime) && "This field is incomplete"}
       </Text>
     </Flex>
   );
@@ -118,14 +151,15 @@ const BookingForm = () => {
       pos="relative"
       zIndex="overlay"
       w="full"
-      justify={{ base: 'center', xl: 'flex-end' }}
+      justify={{ base: "center", xl: "flex-end" }}
+      opacity="0.85"
     >
       <Box
         pos="absolute"
-        bottom={{ lg: '110px', xl: '90px' }}
-        right={{ lg: '670px', xl: '460px' }}
+        bottom={{ lg: "110px", xl: "90px" }}
+        right={{ lg: "670px", xl: "460px" }}
         zIndex="base"
-        display={{ base: 'none', lg: 'block', xl: 'block' }}
+        display={{ base: "none", lg: "block", xl: "block" }}
       >
         <NextImage
           src="/images/pattern-lines.svg"
@@ -138,13 +172,13 @@ const BookingForm = () => {
       <Box
         bg="white"
         w="full"
-        maxW={{ base: 'full', sm: '540px' }}
+        maxW={{ base: "full", sm: "540px" }}
         p={{ base: 6, sm: 8, xl: 12 }}
         shadow="2xl"
         pos="relative"
-        top={{ base: '-140px', xl: '-340px' }}
+        // top={{ base: '-140px', xl: '-340px' }}
         id="form"
-        h={{ sm: 'max-content' }}
+        h={{ sm: "max-content" }}
       >
         <BookingModal
           isOpen={isOpen}
@@ -160,8 +194,8 @@ const BookingForm = () => {
             errorName={errors?.name}
             errorMessage={errors?.name?.message}
             register={{
-              ...register('name', {
-                required: 'This is required',
+              ...register("name", {
+                required: "This is required",
               }),
             }}
           />
@@ -173,28 +207,55 @@ const BookingForm = () => {
             errorName={errors?.email}
             errorMessage={errors?.email?.message}
             register={{
-              ...register('email', {
-                required: 'This is required',
+              ...register("email", {
+                required: "This is required",
               }),
             }}
           />
-
+          {/* Phone */}
+          <CustomInput
+            id="phone"
+            placeholder="Phone"
+            errorName={errors?.phone}
+            errorMessage={errors?.phone?.message}
+            register={{
+              ...register("phone", {
+                required: "This is required",
+              }),
+            }}
+          />
           {/* Date */}
-          <Flex direction={{ base: 'column', md: 'row' }} mb="8">
+          <Flex direction={{ base: "column", md: "row" }} mb="8">
             <CustomFormHeading title="Pick a date" />
             <Stack
-              direction={{ base: 'column', sm: 'row' }}
+              direction={{ base: "column", sm: "row" }}
               spacing="4"
               w="full"
             >
+              {/* Day */}
+              <CustomInput
+                id="day"
+                placeholder="DD"
+                errorName={errors?.day}
+                errorMessage={errors?.day?.message}
+                showErrorMessage={false}
+                register={{
+                  ...register("day", {
+                    required: "This is required",
+                  }),
+                }}
+                min="1"
+                max="31"
+                type="number"
+              />
               {/* Month */}
               <CustomSelect
                 id="month"
                 placeholder="MM"
                 errorName={errors?.month}
                 register={{
-                  ...register('month', {
-                    required: 'This is required',
+                  ...register("month", {
+                    required: "This is required",
                   }),
                 }}
               >
@@ -204,32 +265,14 @@ const BookingForm = () => {
                   </option>
                 ))}
               </CustomSelect>
-
-              {/* Day */}
-              <CustomInput
-                id="day"
-                placeholder="DD"
-                errorName={errors?.day}
-                errorMessage={errors?.day?.message}
-                showErrorMessage={false}
-                register={{
-                  ...register('day', {
-                    required: 'This is required',
-                  }),
-                }}
-                min="1"
-                max="31"
-                type="number"
-              />
-
               {/* Year */}
               <CustomSelect
                 id="year"
                 placeholder="YY"
                 errorName={errors?.year}
                 register={{
-                  ...register('year', {
-                    required: 'This is required',
+                  ...register("year", {
+                    required: "This is required",
                   }),
                 }}
               >
@@ -243,10 +286,10 @@ const BookingForm = () => {
           </Flex>
 
           {/* Time */}
-          <Flex direction={{ base: 'column', md: 'row' }} mb="8">
+          <Flex direction={{ base: "column", md: "row" }} mb="8">
             <CustomFormHeading title="Pick a time" />
             <Stack
-              direction={{ base: 'column', sm: 'row' }}
+              direction={{ base: "column", sm: "row" }}
               spacing="4"
               w="full"
             >
@@ -256,8 +299,8 @@ const BookingForm = () => {
                 placeholder="HH"
                 errorName={errors?.hour}
                 register={{
-                  ...register('hour', {
-                    required: 'This is required',
+                  ...register("hour", {
+                    required: "This is required",
                   }),
                 }}
               >
@@ -274,8 +317,8 @@ const BookingForm = () => {
                 placeholder="MN"
                 errorName={errors?.minute}
                 register={{
-                  ...register('minute', {
-                    required: 'This is required',
+                  ...register("minute", {
+                    required: "This is required",
                   }),
                 }}
               >
@@ -292,8 +335,8 @@ const BookingForm = () => {
                 defaultValue="AM"
                 errorName={errors?.period}
                 register={{
-                  ...register('period', {
-                    required: 'This is required',
+                  ...register("period", {
+                    required: "This is required",
                   }),
                 }}
               >
@@ -309,7 +352,7 @@ const BookingForm = () => {
             borderBottom="1px"
             borderBottomColor="secondary.flushedgray"
             w="full"
-            direction={{ base: 'column', sm: 'row' }}
+            direction={{ base: "column", sm: "row" }}
             justify="space-between"
             align="center"
           >
