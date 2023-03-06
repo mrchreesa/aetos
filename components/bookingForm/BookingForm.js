@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { useState } from "react";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -15,6 +14,7 @@ import NextImage from "next/image";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import axios from "axios";
 
 import {
   hoursList,
