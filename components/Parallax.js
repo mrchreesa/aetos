@@ -22,7 +22,7 @@ const Parallax = ({ children }) => {
   };
   return React.createElement("div", { ref: parallaxRef }, children);
 };
-Parallax.PropTypes = {
+Parallax.propTypes = {
   children: PropTypes.any,
 };
 export default Parallax;
