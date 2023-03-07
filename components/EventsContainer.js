@@ -132,8 +132,8 @@ const EventsContainer = () => {
                       {tabData.content}
                     </Text>
                   </Flex>
-                  <CustomLink href="/booking" variant="black" mb={{ xl: 10 }}>
-                    Book a table
+                  <CustomLink href="#booking" variant="black" mb={{ xl: 10 }}>
+                    Make reservation
                   </CustomLink>
                 </Flex>
               </TabPanel>

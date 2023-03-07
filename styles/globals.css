@@ -3,4 +3,6 @@
 html,
 body {
   font-family: "League Spartan", sans-serif;
+  scroll-behavior: smooth !important;
+  /* background-color: #150e03; */
 }

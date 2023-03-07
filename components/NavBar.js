@@ -3,7 +3,6 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { maxScreenWidth } from "../constants/style";
 import AuthorBanner from "./AuthorBanner";
 import Image from "next/image";
-import Link from "next/link";
 import Logo from "./Logo";
 import insta from "../assets/brand/insta.png";
 
@@ -18,16 +17,17 @@ const NavBar = () => {
           color="white"
           direction={{ base: "column", md: "row" }}
           align={{ base: "center" }}
-          justify="space-around"
+          justify="space-between"
+          // mx="20px"
           //   px={{ base: 6, md: 16, xl: 0 }}
           //   py={{ base: 16, xl: 20 }}
           mx="auto"
-          //   maxW={maxScreenWidth}
+          // maxW={maxScreenWidth}
           w="100%"
           overflowY="hidden"
           backgroundColor="rgb(17,17,17)"
         >
-          <Box mb={{ base: 6, md: 0 }}>
+          <Box ml="30px" mb={{ base: 6, md: 0 }}>
             <Logo />
           </Box>
 
@@ -36,6 +36,7 @@ const NavBar = () => {
             direction={{ base: "row", lg: "row" }}
             justify="center"
             textAlign="center"
+            mr="30px"
           >
             <Text color="#fcbc5a" fontSize="xs" mr="8">
               156A Seven Sisters Road
@@ -53,7 +54,7 @@ const NavBar = () => {
               <br />
             </Text>
             <a
-              style={{ cursor: "pointer", marginLeft: 30 }}
+              style={{ cursor: "pointer", marginLeft: 40 }}
               rel="noopener noreferrer"
               target="_blank"
               href="http://www.instagram.com/aetos_loungetaverna"

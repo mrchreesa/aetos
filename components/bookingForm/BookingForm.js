@@ -103,15 +103,7 @@ const BookingForm = () => {
         });
     });
   }
-  // const sendEmail = (formValues) => {
-  //   axios
-  //     .post(`/api/contact`, formValues)
-  //     .then((response) => {
-  //       // setLoading(false);
-  //       console.log(response);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+
   function handleSeatsDecrement() {
     if (seats > 1) {
       setSeats(seats - 1);
@@ -174,7 +166,7 @@ const BookingForm = () => {
         bg="white"
         w="full"
         maxW={{ base: "full", sm: "540px" }}
-        p={{ base: 6, sm: 8, xl: 12 }}
+        p={{ base: 6, sm: 6, xl: 12 }}
         shadow="2xl"
         pos="relative"
         // top={{ base: '-140px', xl: '-340px' }}

@@ -8,7 +8,6 @@ import dishImageDesktop from "../assets/homepage/musaka-circle1.png";
 import dishImageMobile from "../assets/homepage/musaka-circle-mobile1.png";
 import dishImageTablet from "../assets/homepage/musaka-circle-mobile.png";
 import { maxScreenWidth } from "../constants/style";
-import logo from "../assets/brand/logo.png";
 
 import CustomLink from "./CustomLink";
 import Logo from "./Logo";
@@ -21,6 +20,7 @@ const Hero = () => {
       pos="relative"
       role="region"
       aria-label="Hero landmark"
+      scroll-behavior="smooth"
     >
       {/* Hero bg image lg */}
       <Box
@@ -35,7 +35,6 @@ const Hero = () => {
         overflow="hidden"
       >
         <Parallax>
-          {/* <img src={dishImageDesktop} alt="" /> */}
           <NextImage
             src={dishImageDesktop}
             alt="Dine hero desktop image"
@@ -110,32 +109,52 @@ const Hero = () => {
             <Logo />
           </Box>
           <Parallax>
-            <Heading
-              as="h1"
-              variant="h1"
-              color="white"
-              mb="6"
-              maxW={{ md: "400px", lg: "500px", xl: "600px" }}
-              fontFamily="Baskervillle"
-              fontSize="100px"
-              letterSpacing="10px"
-            >
-              AETOS
-            </Heading>
+            <Flex direction="column" align="center">
+              <Heading
+                as="h1"
+                variant="h1"
+                color="white"
+                mb="10"
+                pb="4"
+                pl="5"
+                maxW={{ md: "400px", lg: "500px", xl: "600px" }}
+                fontFamily="Baskervillle"
+                fontSize="110px"
+                letterSpacing="10px"
+                shadow="0px 10px #e2a54a"
+              >
+                AETOS
+              </Heading>
 
-            <Text
-              color="white"
-              fontSize="20px"
-              textStyle={{ base: "body2", xl: "body1" }}
-              mb={{ base: 6, lg: 8, xl: 10 }}
-              maxW={{ base: "400px", xl: "500px" }}
-            >
-              The perfect place to experience the rich flavours and hospitality
-              of Greece.
-            </Text>
-            <CustomLink variant="dark" href="/booking" mb="20">
-              MAKE A RESERVATION
-            </CustomLink>
+              <Text
+                color="white"
+                fontSize="20px"
+                textAlign="center"
+                textStyle={{ base: "body2", xl: "body1" }}
+                mb={{ base: 6, lg: 8, xl: 10 }}
+                maxW={{ base: "400px", xl: "500px" }}
+              >
+                <h1
+                  style={{
+                    textAlign: "center",
+                    fontSize: "40px",
+                    paddingTop: "16px",
+                  }}
+                >
+                  The perfect place{" "}
+                </h1>{" "}
+                <br /> to experience the rich flavours and hospitality of
+                Greece.
+              </Text>
+              <CustomLink
+                // style={{ backgroundColor: "#150e03" }}
+                variant="dark"
+                href="#booking"
+                mb="20"
+              >
+                MAKE RESERVATION
+              </CustomLink>
+            </Flex>
           </Parallax>
         </Flex>
       </Flex>

@@ -73,7 +73,7 @@ const MainBox = ({
             top={{
               base: 0,
               sm: isFirst ? -mobileOffsetY : 0,
-              lg: 20,
+              lg: "110px",
             }}
             ml={{ base: 0, md: "-50px" }}
             w={imageMobile.width / 2}

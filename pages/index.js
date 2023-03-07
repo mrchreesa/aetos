@@ -1,12 +1,13 @@
-import { Box, Flex } from '@chakra-ui/react';
-import { NextSeo } from 'next-seo';
+import { Box, Flex } from "@chakra-ui/react";
+import { NextSeo } from "next-seo";
 
-import EventsContainer from '../components/EventsContainer';
-import Footer from '../components/Footer';
-import Hero from '../components/Hero';
-import HighlightsContainer from '../components/HighlightsContainer';
-import MainContainer from '../components/MainContainer';
-import ReservationBanner from '../components/ReservationBanner';
+import EventsContainer from "../components/EventsContainer";
+import Footer from "../components/Footer";
+import Hero from "../components/Hero";
+import HighlightsContainer from "../components/HighlightsContainer";
+import MainContainer from "../components/MainContainer";
+import ReservationBanner from "../components/ReservationBanner";
+import Maps from "../components/Maps";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
 
         <EventsContainer />
         <ReservationBanner />
+        <Maps />
       </Box>
       <Footer />
     </Box>

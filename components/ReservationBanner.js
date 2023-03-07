@@ -27,14 +27,12 @@ const ReservationBanner = () => {
         py={{ base: 20, xl: 24 }}
         maxW={maxScreenWidth}
         mx="auto"
+        id="booking"
       >
         <Heading as="h2" variant="h2" color="white" mb={{ base: 6, xl: 0 }}>
           Ready to book a table?
         </Heading>
         <BookingForm />
-        {/* <CustomLink href="/booking" variant="dark">
-          Make A Reservation
-        </CustomLink> */}
       </Flex>
     </Box>
   );
