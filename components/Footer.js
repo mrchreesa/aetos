@@ -69,7 +69,11 @@ const Footer = () => {
               02072635582
               <br />
             </Text>
-            <Text color="#fcbc5a" fontSize="xs">
+            <Text
+              color="#fcbc5a"
+              fontSize="xs"
+              display={{ base: "none", md: "block" }}
+            >
               Opening Times <br />
               SUN - THU: 10:00 AM - 11:00 PM
               <br />

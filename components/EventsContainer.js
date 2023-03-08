@@ -49,16 +49,16 @@ const EventsContainer = () => {
         <Flex direction={{ base: "column", lg: "row" }} align="center">
           <Flex>
             <Box
-              w={{ base: "full", sm: tabData.imageMobile.width / 1.3 }}
-              h={{ base: "full", sm: tabData.imageMobile.height / 1.3 }}
+              w={{ base: "full", sm: tabData.imageMobile.width / 1.7 }}
+              h={{ base: "full", sm: tabData.imageMobile.height / 1.7 }}
               shadow="2xl"
               display={{ base: "inline-flex", md: "none" }}
             >
               <NextImage
                 placeholder="blur"
                 src={tabData.imageMobile}
-                width={tabData.imageMobile.width / 1.3}
-                height={tabData.imageMobile.height / 1.3}
+                width={tabData.imageMobile.width / 1.7}
+                height={tabData.imageMobile.height / 1.7}
                 alt={tabData.imageAlt}
               />
             </Box>
