@@ -10,7 +10,7 @@ const containerStyle = {
 function MyComponent() {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCLYZw2YPDqMior7kAW5oJC0grJPZGqkkE",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
   const center = useMemo(
     () => ({

@@ -35,16 +35,17 @@ const Footer = () => {
       <Flex role="contentinfo" bg="primary.codgray">
         <Flex
           color="white"
-          direction={{ base: "column", md: "row" }}
+          // direction={{ base: "column", md: "row" }}
           align={{ base: "center" }}
           justify="space-between"
-          // px={{ base: 6, md: 16, xl: 0 }}
+          px={{ base: 6, md: 6, xl: 0 }}
           // py={{ base: 2, xl: 4 }}
           mx="auto"
           maxW={maxScreenWidth}
-          w="full"
+          w="100%"
+          overflowY="hidden"
         >
-          <Box mb={{ base: 6, md: 0 }}>
+          <Box>
             <Logo />
           </Box>
 
@@ -52,10 +53,15 @@ const Footer = () => {
             justify="center"
             textAlign="center"
             align={{ base: "center" }}
-            direction={{ base: "column", md: "row" }}
-            display={{ base: "none", md: "flex" }}
+            // direction={{ base: "column", md: "row" }}
+            // display={{ base: "none", md: "flex" }}
           >
-            <Text color="#fcbc5a" fontSize="sm" mr="8">
+            <Text
+              color="#fcbc5a"
+              fontSize="xs"
+              display={{ base: "none", lg: "block" }}
+              mr="8"
+            >
               156A Seven Sisters Road
               <br />
               N7 7PL, London, UK
@@ -63,7 +69,7 @@ const Footer = () => {
               02072635582
               <br />
             </Text>
-            <Text color="#fcbc5a" fontSize="sm">
+            <Text color="#fcbc5a" fontSize="xs">
               Opening Times <br />
               SUN - THU: 10:00 AM - 11:00 PM
               <br />

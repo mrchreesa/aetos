@@ -15,7 +15,7 @@ const NavBar = () => {
           top="0"
           left="0"
           color="white"
-          direction={{ base: "column", md: "row" }}
+          // direction={{ base: "column", md: "row" }}
           align={{ base: "center" }}
           justify="space-between"
           // mx="20px"
@@ -27,7 +27,7 @@ const NavBar = () => {
           overflowY="hidden"
           backgroundColor="rgb(17,17,17)"
         >
-          <Box ml="30px" mb={{ base: 6, md: 0 }}>
+          <Box ml="30px">
             <Logo />
           </Box>
 
@@ -38,7 +38,12 @@ const NavBar = () => {
             textAlign="center"
             mr="30px"
           >
-            <Text color="#fcbc5a" fontSize="xs" mr="8">
+            <Text
+              color="#fcbc5a"
+              fontSize="xs"
+              display={{ base: "none", lg: "block" }}
+              mr="8"
+            >
               156A Seven Sisters Road
               <br />
               N7 7PL, London, UK

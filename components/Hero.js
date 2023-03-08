@@ -119,7 +119,7 @@ const Hero = () => {
                 pl="5"
                 maxW={{ md: "400px", lg: "500px", xl: "600px" }}
                 fontFamily="Baskervillle"
-                fontSize="110px"
+                fontSize={{ base: "90px", lg: "110px" }}
                 letterSpacing="10px"
                 shadow="0px 10px #e2a54a"
               >
