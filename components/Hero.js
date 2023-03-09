@@ -24,6 +24,7 @@ const Hero = () => {
     >
       {/* Hero bg image lg */}
       <Box
+        className="header-logo"
         display={{ base: "none", lg: "inline-flex" }}
         w={{ lg: "600px", xl: "600px" }}
         h="full"
@@ -78,6 +79,7 @@ const Hero = () => {
 
         {/* Hero content */}
         <Flex
+          className="header"
           w="100%"
           direction="column"
           pt={{ base: 10, sm: 12, md: 6, lg: 20, xl: "65px" }}

@@ -20,6 +20,7 @@ const MainContainer = () => {
       aria-label="Main container"
     >
       <MainBox
+        className="store-front"
         isFirst={true}
         imageSide="left"
         imageDesktop={placeDesktop}
@@ -42,7 +43,7 @@ const MainContainer = () => {
         title="Start your day off right"
         text="With our delicious breakfast options and freshly brewed coffee or
 Join us for a satisfying lunch or dinner experience! Our menu features a variety of mouth-watering dishes.
-From a Greek Moussaka and Salad to juicy burgers and a full of flavour sea bass, we offer something for everyone. Our ingredients are always fresh and of the highest quality, ensuring that each dish is bursting with flavour. Come visit us for breakfast, lunch or dinner and taste the difference in our delicious and satisfying dishes!
+From a Greek Moussaka and Salad to Juicy Burgers and a full of flavour Sea Bass, we offer something for everyone. Our ingredients are always fresh and of the highest quality, ensuring that each dish is bursting with flavour. Come visit us for breakfast, lunch or dinner and taste the difference in our delicious and satisfying dishes!
 "
       />
     </Flex>

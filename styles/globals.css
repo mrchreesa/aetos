@@ -4,5 +4,25 @@ html,
 body {
   font-family: "League Spartan", sans-serif;
   scroll-behavior: smooth !important;
-  /* background-color: #150e03; */
+}
+
+.header {
+  animation: slideInLeft 1.5s ease-in 1;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-300px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(+300px);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
