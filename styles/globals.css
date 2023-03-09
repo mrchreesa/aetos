@@ -9,6 +9,9 @@ body {
 .header {
   animation: slideInLeft 1.5s ease-in 1;
 }
+.header-logo {
+  animation: fadeIn 1.5s ease-in 1;
+}
 
 @keyframes slideInLeft {
   from {
@@ -18,11 +21,11 @@ body {
     transform: translateX(0);
   }
 }
-@keyframes slideInRight {
+@keyframes fadeIn {
   from {
-    transform: translateX(+300px);
+    transform: opacity(0);
   }
   to {
-    transform: translateX(0);
+    transform: opacity(1);
   }
 }

@@ -24,7 +24,6 @@ const Hero = () => {
     >
       {/* Hero bg image lg */}
       <Box
-        className="header-logo"
         display={{ base: "none", lg: "inline-flex" }}
         w={{ lg: "600px", xl: "600px" }}
         h="full"
@@ -33,10 +32,11 @@ const Hero = () => {
         right="0"
         zIndex="base"
         opacity={0.85}
-        overflow="hidden"
+        // overflow="hidden"
       >
         <Parallax>
           <NextImage
+            className="header-logo"
             src={dishImageDesktop}
             alt="Dine hero desktop image"
             objectFit="cover"
@@ -86,7 +86,7 @@ const Hero = () => {
           // padding for the main images
           pb={{
             base: "60px",
-            sm: "150px",
+            sm: "60px",
             md: "220px",
             lg: "220px",
             xl: "200px",
@@ -97,7 +97,7 @@ const Hero = () => {
           align={{ base: "center", lg: "flex-start" }}
           textAlign={{ base: "center", lg: "left" }}
           zIndex="docked"
-          overflow="hidden"
+          // overflow="hidden"
         >
           <Box
             display={{ base: "none", lg: "block" }}
@@ -148,6 +148,7 @@ const Hero = () => {
                 <br /> to experience the rich flavours and hospitality of
                 Greece.
               </Text>
+
               <CustomLink
                 // style={{ backgroundColor: "#150e03" }}
                 variant="dark"
@@ -156,6 +157,18 @@ const Hero = () => {
               >
                 MAKE RESERVATION
               </CustomLink>
+              <Text
+                color="#fcbc5a"
+                fontSize="xl"
+                display={{ base: "block", md: "none" }}
+              >
+                156A Seven Sisters Road
+                <br />
+                N7 7PL, London, UK
+                <br />
+                02072635582
+                <br />
+              </Text>
             </Flex>
           </Parallax>
         </Flex>

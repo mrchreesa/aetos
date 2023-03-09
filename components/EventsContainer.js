@@ -49,8 +49,8 @@ const EventsContainer = () => {
         <Flex direction={{ base: "column", lg: "row" }} align="center">
           <Flex>
             <Box
-              w={{ base: "full", sm: tabData.imageMobile.width / 1.7 }}
-              h={{ base: "full", sm: tabData.imageMobile.height / 1.7 }}
+              w={{ base: "full", sm: tabData.imageMobile.width / 1.8 }}
+              h={{ base: "full", sm: tabData.imageMobile.height / 1.8 }}
               shadow="2xl"
               display={{ base: "inline-flex", md: "none" }}
             >

@@ -72,7 +72,7 @@ const MainBox = ({
             pos="relative"
             top={{
               base: 0,
-              sm: isFirst ? -mobileOffsetY : 0,
+              sm: "20px",
               lg: "110px",
             }}
             ml={{ base: 0, md: "-50px" }}

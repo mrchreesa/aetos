@@ -14,7 +14,7 @@ export default function Home() {
     <Box>
       <NextSeo
         title="Home"
-        description="Exquisite dining since 1989, experience our seasonal menu in beautiful country surroundings."
+        description="The perfect place to experience the rich flavours and hospitality of Greece."
       />
       <Box role="main">
         <Flex direction="column" align="center">
