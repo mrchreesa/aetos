@@ -34,7 +34,7 @@ export const SEO = {
     url: canonicalUrl,
     images: [
       {
-        url: "https://www.dropbox.com/s/tz8blakipu751iu/aetostaverna.png?dl=0",
+        url: "https://drive.google.com/file/d/1g6I-ZgRlajSoL9IQ104dmuKxyGOjQJUo/view?usp=sharing",
         width: 1200,
         height: 630,
         alt: "Preview of the website",
