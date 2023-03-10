@@ -34,7 +34,7 @@ export const SEO = {
     url: canonicalUrl,
     images: [
       {
-        url: "images/aetostaverna.png",
+        url: "https://i.postimg.cc/ncPD4xX4/aetostaverna.png",
         width: 1200,
         height: 630,
         alt: "Preview of the website",
