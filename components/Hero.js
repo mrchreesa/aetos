@@ -145,8 +145,7 @@ const Hero = () => {
                 >
                   The perfect place{" "}
                 </h1>{" "}
-                <br /> to experience the rich flavours and hospitality of
-                Greece.
+                <br /> to experience the rich flavours and hospitality of Greece
               </Text>
 
               <CustomLink
