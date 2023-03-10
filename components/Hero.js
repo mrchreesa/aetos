@@ -149,7 +149,6 @@ const Hero = () => {
               </Text>
 
               <CustomLink
-                // style={{ backgroundColor: "#150e03" }}
                 variant="dark"
                 href="#booking"
                 mb="20"
