@@ -1,4 +1,4 @@
-const canonicalUrl = "https://aetos.vercel.app/";
+const canonicalUrl = "https://aetostaverna.co.uk/";
 
 const defaultTitle = "Aetos Taverna";
 const defaultDescription =
@@ -34,7 +34,7 @@ export const SEO = {
     url: canonicalUrl,
     images: [
       {
-        url: "https://www.dropbox.com/s/kxjtfenjupr41mv/dine-ogimage.jpg?raw=1",
+        url: "https://www.dropbox.com/s/tz8blakipu751iu/aetostaverna.png?dl=0",
         width: 1200,
         height: 630,
         alt: "Preview of the website",
