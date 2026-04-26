@@ -2,12 +2,13 @@ import { Box, Flex } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 import EventsContainer from "../components/EventsContainer";
+import FadeInOnScroll from "../components/FadeInOnScroll";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import HighlightsContainer from "../components/HighlightsContainer";
 import MainContainer from "../components/MainContainer";
-import ReservationBanner from "../components/ReservationBanner";
 import Maps from "../components/Maps";
+import ReservationBanner from "../components/ReservationBanner";
 
 export default function Home() {
   return (
@@ -19,13 +20,23 @@ export default function Home() {
       <Box role="main">
         <Flex direction="column" align="center">
           <Hero />
-          <MainContainer zIndex={1000} />
-          <HighlightsContainer />
+          <FadeInOnScroll>
+            <MainContainer zIndex={1000} />
+          </FadeInOnScroll>
+          <FadeInOnScroll>
+            <HighlightsContainer />
+          </FadeInOnScroll>
         </Flex>
 
-        <EventsContainer />
-        <ReservationBanner />
-        <Maps />
+        <FadeInOnScroll>
+          <EventsContainer />
+        </FadeInOnScroll>
+        <FadeInOnScroll>
+          <ReservationBanner />
+        </FadeInOnScroll>
+        <FadeInOnScroll>
+          <Maps />
+        </FadeInOnScroll>
       </Box>
       <Footer />
     </Box>
