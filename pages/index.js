@@ -19,7 +19,7 @@ export default function Home() {
       <Box role="main">
         <Flex direction="column" align="center">
           <Hero />
-          <MainContainer />
+          <MainContainer zIndex={1000} />
           <HighlightsContainer />
         </Flex>
 

@@ -9,7 +9,7 @@ import foodTablet from "../assets/homepage/coffee-lunch.png";
 
 import MainBox from "./MainBox";
 
-const MainContainer = () => {
+const MainContainer = (props) => {
   return (
     <Flex
       w="full"
@@ -18,6 +18,9 @@ const MainContainer = () => {
       bg="white"
       role="region"
       aria-label="Main container"
+      position="relative"
+      zIndex={1}
+      {...props}
     >
       <MainBox
         className="store-front"

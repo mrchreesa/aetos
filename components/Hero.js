@@ -96,8 +96,7 @@ const Hero = () => {
           mx={{ base: "auto", lg: 0 }}
           align={{ base: "center", lg: "flex-start" }}
           textAlign={{ base: "center", lg: "left" }}
-          zIndex="docked"
-          // overflow="hidden"
+          zIndex={0}
         >
           <Box
             display={{ base: "none", lg: "block" }}
@@ -120,7 +119,7 @@ const Hero = () => {
                 pb="4"
                 pl="5"
                 maxW={{ md: "400px", lg: "500px", xl: "600px" }}
-                fontFamily="Baskervillle"
+                fontFamily="Baskerville"
                 fontSize={{ base: "90px", lg: "110px" }}
                 letterSpacing="10px"
                 shadow="0px 10px #e2a54a"
