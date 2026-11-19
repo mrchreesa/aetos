@@ -1,49 +1,44 @@
-import { Flex, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
+import { forwardRef } from "react";
 
-const CustomInput = (props) => {
-  const {
-    id,
-    placeholder,
-    errorName,
-    errorMessage,
-    register,
-    showErrorMessage,
-    ...otherProps
-  } = props;
+import {
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-  return (
-    <FormControl isInvalid={errorName} id={id} mb="8">
-      <Flex direction="column" pos="relative">
-        <Input
-          id={id}
-          placeholder={placeholder}
-          _placeholder={{ color: 'secondary.inputgray' }}
-          bg="white"
-          color="primary.codgray"
-          fontSize="md"
-          variant="flushed"
-          borderBottomColor="secondary.flushedgray"
-          {...register}
-          {...otherProps}
-        />
-        {showErrorMessage && (
-          <FormErrorMessage fontSize="11px" pos="absolute" bottom="-22px">
-            {errorName && errorMessage}
-          </FormErrorMessage>
-        )}
-      </Flex>
-    </FormControl>
-  );
+export const fieldStyles = {
+  variant: "flushed",
+  bg: "white",
+  color: "primary.codgray",
+  fontSize: "md",
+  h: "48px",
+  borderBottomColor: "secondary.flushedgray",
+  focusBorderColor: "primary.beaver",
+  _placeholder: { color: "secondary.inputgray" },
 };
 
+/** Text input with a visually hidden label and inline error. */
+const CustomInput = forwardRef(function CustomInput(
+  { id, label, error, ...inputProps },
+  ref
+) {
+  return (
+    <FormControl isInvalid={Boolean(error)} id={id} mb="6">
+      <FormLabel srOnly>{label}</FormLabel>
+      <Input ref={ref} placeholder={label} {...fieldStyles} {...inputProps} />
+      <FormErrorMessage fontSize="xs" mt="1">
+        {error?.message}
+      </FormErrorMessage>
+    </FormControl>
+  );
+});
+
 CustomInput.propTypes = {
-  errorMessage: PropTypes.string,
-  errorName: PropTypes.object,
-  id: PropTypes.string,
-  placeholder: PropTypes.string,
-  register: PropTypes.object,
-  showErrorMessage: PropTypes.bool,
+  error: PropTypes.object,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default CustomInput;

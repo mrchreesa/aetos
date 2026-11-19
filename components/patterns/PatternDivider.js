@@ -1,12 +1,14 @@
-import * as React from 'react';
+import { Box, Flex } from "@chakra-ui/react";
 
-import { Box, Flex } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-
-function PatternDivider({ paddingY = '45px', props }) {
+/** Small gold line-and-circle ornament above section headings. */
+function PatternDivider(props) {
   return (
-    <Flex justify={{ base: 'center', xl: 'left' }}>
-      <Box w="71px" py={paddingY} {...props}>
+    <Flex
+      justify={{ base: "center", lg: "flex-start" }}
+      aria-hidden="true"
+      {...props}
+    >
+      <Box w="71px">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 7">
           <g fill="none" fillRule="evenodd">
             <path fill="#9E7F66" d="M15 3h56v1H15z" />
@@ -17,10 +19,5 @@ function PatternDivider({ paddingY = '45px', props }) {
     </Flex>
   );
 }
-
-PatternDivider.propTypes = {
-  paddingY: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  props: PropTypes.any,
-};
 
 export default PatternDivider;

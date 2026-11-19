@@ -1,15 +1,26 @@
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+];
+
 module.exports = {
   reactStrictMode: true,
+  poweredByHeader: false,
   images: {
-    // default deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    deviceSizes: [280, 320, 768, 1080, 1200, 1440, 1920, 2048, 3840],
+    deviceSizes: [320, 420, 640, 768, 1080, 1200, 1440, 1920, 2400],
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-
-    return config;
+  async headers() {
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+      {
+        source: "/menu.pdf",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
+      },
+    ];
   },
 };

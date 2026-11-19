@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
+
 import PropTypes from "prop-types";
 
-const Parallax = ({ children, speed = 0.25 }) => {
+const Parallax = ({ children, speed = 0.25, className, style }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -96,12 +97,14 @@ const Parallax = ({ children, speed = 0.25 }) => {
     };
   }, [speed]);
 
-  return React.createElement("div", { ref }, children);
+  return React.createElement("div", { ref, className, style }, children);
 };
 
 Parallax.propTypes = {
   children: PropTypes.any,
+  className: PropTypes.string,
   speed: PropTypes.number,
+  style: PropTypes.object,
 };
 
 export default Parallax;

@@ -3,197 +3,98 @@ import NextImage from "next/image";
 import PropTypes from "prop-types";
 
 import { maxScreenWidth } from "../constants/style";
-import Parallax from "./Parallax";
 
+import PatternLines from "./PatternLines";
 import PatternDivider from "./patterns/PatternDivider";
 
 const MainBox = ({
   isFirst,
+  isCutout,
   imageSide,
-  imageDesktop,
-  imageMobile,
-  imageTablet,
+  image,
   alt,
-  imageBackground,
   title,
-  text,
+  children,
 }) => {
-  const mobileOffsetY = 75;
-  const tabletOffsetY = 100;
-  const desktopOffsetY = 70;
   const isLeftImage = imageSide === "left";
 
   return (
-    <Box mx="auto" w="full" pos="relative">
-      {imageBackground && (
-        <Box
-          w="full"
-          pos="absolute"
-          h={{
-            md: isLeftImage ? "490px" : "770px",
-            lg: "600px",
-            xl: isLeftImage ? "600px" : "650px",
-          }}
-          bgImage="/images/pattern-curve-top-right.svg"
-          bgRepeat="no-repeat"
-          bgSize={{
-            md: "100%",
-            lg: "60%",
-            xl: isLeftImage ? "895px 320px" : "895px 650px",
-          }}
-          bgPos={{
-            base: "0 0",
-            sm: "80px -150px",
-            md: isLeftImage ? "-380px 200px" : "-380px 490px",
-            lg: isLeftImage ? "-50px 50px" : "-50px 50px",
-            xl: isLeftImage ? "0 280px" : "0 170px",
-          }}
-          transform={isLeftImage ? "" : "rotate(1turn) scale(-1, 1)"}
-        />
-      )}
+    <Box w="full" pos="relative">
+      {/* Soft curved panel behind the photo */}
+      <Box
+        display={{ base: "none", lg: "block" }}
+        pos="absolute"
+        top={isFirst ? "180px" : "120px"}
+        bottom={isFirst ? "-60px" : "-120px"}
+        w="60%"
+        left={isLeftImage ? 0 : "auto"}
+        right={isLeftImage ? "auto" : 0}
+        bg="rgba(92, 103, 121, 0.077)"
+        borderTopRightRadius={isLeftImage ? "100px" : 0}
+        borderTopLeftRadius={isLeftImage ? 0 : "100px"}
+        aria-hidden="true"
+      />
 
       <Flex
-        direction={{
-          base: "column",
-          lg: isLeftImage ? "row" : "row-reverse",
-        }}
+        direction={{ base: "column", lg: isLeftImage ? "row" : "row-reverse" }}
+        align="center"
         justify="space-between"
-        px={{ base: 6, md: 10, lg: 0, xl: 0 }}
-        py={{ base: 12, sm: 0 }}
-        pos="relative"
+        gridGap={{ base: 10, lg: 16, xl: 24 }}
+        px={{ base: 6, md: 10, xl: 0 }}
         maxW={{ lg: "960px", xl: maxScreenWidth }}
         mx="auto"
+        pos="relative"
       >
-        {/* Image */}
-        <Flex justify="center">
-          {/* mobile version (sm also lg) */}
+        <Box
+          pos="relative"
+          flexShrink={0}
+          w={{ base: "full", md: "560px", lg: "460px", xl: "540px" }}
+          maxW="full"
+          mt={{ lg: isFirst ? "-80px" : 0 }}
+        >
           <Box
-            shadow="2xl"
-            pos="relative"
-            top={{
-              base: 0,
-              sm: "20px",
-              lg: "110px",
-            }}
-            ml={{ base: 0, md: "-50px" }}
-            w={imageMobile.width / 2}
-            h={{
-              base: imageMobile / 2,
-              sm: isFirst
-                ? imageMobile.height / 2 - mobileOffsetY
-                : imageMobile.height / 2,
-              lg: imageMobile.height / 2 - mobileOffsetY,
-            }}
-            display={{
-              base: "inline-flex",
-              sm: "block",
-              md: "none",
-              lg: "block",
-              xl: "none",
-            }}
-          >
-            <NextImage src={imageMobile} alt={alt} placeholder="blur" />
-            {!isLeftImage && (
-              <Box
-                pos="absolute"
-                top="50px"
-                right="-70px"
-                display={{ base: "none", md: "none", lg: "block" }}
-              >
-                <NextImage
-                  src="/images/pattern-lines.svg"
-                  width="160px"
-                  height="76px"
-                  role="presentation"
-                  alt=""
-                />
-              </Box>
-            )}
-          </Box>
-          {/* tablet version (md) */}
-          <Box
-            shadow="2xl"
-            pos="relative"
-            top={isFirst ? -tabletOffsetY : 0}
-            w={imageTablet.width / 2}
-            h={
-              isFirst
-                ? imageTablet.height / 2 - tabletOffsetY
-                : imageTablet.height / 2
-            }
-            display={{ base: "none", md: "block", lg: "none" }}
-            zIndex="1"
-          >
-            <NextImage src={imageTablet} alt={alt} placeholder="blur" />
-
-            {!isLeftImage && (
-              <Box pos="absolute" bottom="50px" right="-60px">
-                <NextImage
-                  src="/images/pattern-lines.svg"
-                  width="160px"
-                  height="76px"
-                  role="presentation"
-                  alt=""
-                />
-              </Box>
-            )}
-          </Box>
-          {/* desktop version (xl) */}
-          <Box
-            shadow="2xl"
-            pos="relative"
-            top={isLeftImage ? -desktopOffsetY : 0}
-            bottom={isLeftImage ? 0 : desktopOffsetY}
-            w={imageDesktop.width / 2}
-            h={imageDesktop.height / 2 - desktopOffsetY}
-            display={{ base: "none", xl: "block" }}
-            zIndex="overlay"
+            lineHeight="0"
+            // Cut-out images have transparent corners, so shadow the shape
+            // itself rather than the bounding box.
+            shadow={isCutout ? "none" : "2xl"}
+            overflow={isCutout ? "visible" : "hidden"}
+            filter={isCutout ? "drop-shadow(0 24px 32px rgba(0,0,0,0.22))" : "none"}
           >
             <NextImage
-              src={imageDesktop}
-              alt="Enjoyable place image mobile"
-              placeholder="blur"
+              src={image}
+              alt={alt}
+              layout="responsive"
+              sizes="(min-width: 1440px) 540px, (min-width: 1024px) 460px, (min-width: 768px) 560px, 100vw"
+              placeholder={isCutout ? "empty" : "blur"}
             />
-            {!isLeftImage && (
-              <Box pos="absolute" top="280px" right="-110px">
-                <NextImage
-                  src="/images/pattern-lines.svg"
-                  width="160px"
-                  height="76px"
-                  role="presentation"
-                  alt=""
-                />
-              </Box>
-            )}{" "}
-          </Box>{" "}
-        </Flex>
+          </Box>
+          {!isLeftImage && (
+            <PatternLines
+              display={{ base: "none", md: "block" }}
+              bottom="-38px"
+              right={{ md: "-60px", xl: "-90px" }}
+            />
+          )}
+        </Box>
 
-        {/* Content */}
         <Flex
           direction="column"
           align={{ base: "center", lg: "flex-start" }}
-          justify="center"
           textAlign={{ base: "center", lg: "left" }}
-          pl={{ lg: isLeftImage ? "35px" : 0 }}
-          mb={{
-            sm: !isLeftImage ? "70px" : 0,
-            md: !isLeftImage ? "120px" : 0,
-            lg: !isLeftImage ? "60px" : 0,
-          }}
-          zIndex="overlay"
+          maxW={{ base: "560px", xl: "445px" }}
         >
-          <PatternDivider paddingY="45px" />
-          <Box maxW={{ base: "375px", xl: "445px" }}>
-            <Heading as="h2" variant="h2" color="primary.codgray" maxW="400px">
-              {title}
-            </Heading>
-            <Text
-              textStyle={{ base: "body2", xl: "body1" }}
-              color="primary.codgray"
-            >
-              {text}
-            </Text>
-          </Box>
+          <PatternDivider mb={{ base: 8, lg: 10 }} />
+          <Heading as="h2" variant="h2" color="primary.codgray">
+            {title}
+          </Heading>
+          <Text
+            textStyle={{ base: "body2", xl: "body1" }}
+            color="gray.700"
+            as="div"
+            sx={{ "p + p": { mt: 4 } }}
+          >
+            {children}
+          </Text>
         </Flex>
       </Flex>
     </Box>
@@ -202,22 +103,11 @@ const MainBox = ({
 
 MainBox.propTypes = {
   alt: PropTypes.string.isRequired,
-  imageBackground: PropTypes.bool,
-  imageDesktop: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-  }).isRequired,
-  imageMobile: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-  }).isRequired,
+  children: PropTypes.node.isRequired,
+  image: PropTypes.object.isRequired,
   imageSide: PropTypes.oneOf(["right", "left"]).isRequired,
-  imageTablet: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-  }).isRequired,
+  isCutout: PropTypes.bool,
   isFirst: PropTypes.bool,
-  text: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
 

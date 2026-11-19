@@ -1,56 +1,63 @@
 import { Box, Flex } from "@chakra-ui/react";
-import Parallax from "./Parallax";
-import placeDesktop from "../assets/homepage/aetos-front.jpeg";
-import placeMobile from "../assets/homepage/aetos-front.jpeg";
-import placeTablet from "../assets/homepage/aetos-front.jpeg";
-import foodDesktop from "../assets/homepage/coffee-lunch.png";
-import foodMobile from "../assets/homepage/coffee-lunch.png";
-import foodTablet from "../assets/homepage/coffee-lunch.png";
+
+import storefront from "../assets/homepage/aetos-front.jpg";
+import food from "../assets/homepage/coffee-lunch.webp";
 
 import MainBox from "./MainBox";
 
-const MainContainer = (props) => {
-  return (
-    <Flex
-      w="full"
-      direction="column"
-      py={{ base: 8, sm: 0 }}
-      bg="white"
-      role="region"
-      aria-label="Main container"
-      position="relative"
-      zIndex={1}
-      {...props}
+const MainContainer = (props) => (
+  <Flex
+    as="section"
+    aria-label="About us"
+    w="full"
+    direction="column"
+    py={{ base: 16, lg: 0 }}
+    pb={{ lg: 32 }}
+    bg="white"
+    pos="relative"
+    {...props}
+  >
+    <MainBox
+      isFirst
+      imageSide="left"
+      image={storefront}
+      alt="The front of Aetos Greek Taverna on Seven Sisters Road at night"
+      title="Welcome to our family-owned taverna"
     >
-      <MainBox
-        className="store-front"
-        isFirst={true}
-        imageSide="left"
-        imageDesktop={placeDesktop}
-        imageMobile={placeMobile}
-        imageTablet={placeTablet}
-        alt="Enjoyable place image"
-        imageBackground={true}
-        title="Welcome to our family-owned business!"
-        text=" We are a team of family members who share a love for what we do. We take pride in offering high-quality products. Whether you're looking for a cup of coffee and breakfast, Greek mama’s food, or a delicious glass of wine, we've got you covered. From our friendly customer service to our attention to detail, we provide a great experience for everyone who walks through our doors. Thank you for considering us for your needs. We look forward to serving you."
-      />
+      <p>
+        We are a family who share a love for what we do, and we take pride in
+        everything we serve. Whether you&rsquo;re after a coffee and breakfast,
+        Greek mama&rsquo;s home cooking or a glass of good wine, we&rsquo;ve got
+        you covered.
+      </p>
+      <p>
+        From our friendly service to our attention to detail, we want everyone
+        who walks through our doors to feel at home. We look forward to
+        welcoming you.
+      </p>
+    </MainBox>
 
-      <Box h={{ base: "0", sm: "90px", md: "130px", xl: "120px" }} />
-      <MainBox
-        imageSide="right"
-        imageDesktop={foodDesktop}
-        imageMobile={foodMobile}
-        imageTablet={foodTablet}
-        alt="Breakfast and dinner"
-        imageBackground={true}
-        title="Start your day off right"
-        text="With our delicious breakfast options and freshly brewed coffee or
-Join us for a satisfying lunch or dinner experience! Our menu features a variety of mouth-watering dishes.
-From a Greek Moussaka and Salad to Juicy Burgers and a full of flavour Sea Bass, we offer something for everyone. Our ingredients are always fresh and of the highest quality, ensuring that each dish is bursting with flavour. Come visit us for breakfast, lunch or dinner and taste the difference in our delicious and satisfying dishes!
-"
-      />
-    </Flex>
-  );
-};
+    <Box h={{ base: 16, md: 24, lg: 32 }} />
+
+    <MainBox
+      imageSide="right"
+      isCutout
+      image={food}
+      alt="Coffee, breakfast and lunch dishes at Aetos"
+      title="Start your day off right"
+    >
+      <p>
+        Join us for a delicious breakfast and freshly brewed coffee, or stay for
+        a satisfying lunch or dinner. Our menu runs from Greek moussaka and
+        salads to juicy burgers and a full-of-flavour sea bass, so there&rsquo;s
+        something for everyone.
+      </p>
+      <p>
+        Our ingredients are always fresh and of the highest quality. Come and
+        taste the difference.
+      </p>
+    </MainBox>
+  </Flex>
+);
 
 export default MainContainer;

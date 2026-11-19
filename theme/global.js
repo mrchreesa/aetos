@@ -1,9 +1,14 @@
 const global = {
-  // styles for the `body`
   body: {
-    fontSize: '18px',
-    fontFamily: 'body',
-    bg: '#1A1A1A',
+    fontSize: "18px",
+    fontFamily: "body",
+    bg: "primary.codgray",
+    color: "primary.codgray",
+    WebkitFontSmoothing: "antialiased",
+  },
+  "::selection": {
+    bg: "brand.gold",
+    color: "primary.codgray",
   },
 };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import PropTypes from "prop-types";
 
 const EASING = "cubic-bezier(0.22, 0.61, 0.36, 1)";

@@ -1,177 +1,171 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
-import NavBar from "./NavBar";
-import Parallax from "./Parallax";
-// import dishImageDesktop from "../assets/homepage/musaka-bg-desktop.JPG";
-import dishImageDesktop from "../assets/homepage/musaka-circle1.png";
 
-import dishImageMobile from "../assets/homepage/musaka-circle-mobile1.png";
-import dishImageTablet from "../assets/homepage/musaka-circle-mobile.png";
+import heroDesktop from "../assets/homepage/hero-desktop.jpg";
+import heroMobile from "../assets/homepage/hero-tablet.jpg";
 import { maxScreenWidth } from "../constants/style";
 
+import { AddressBlock } from "./ContactInfo";
 import CustomLink from "./CustomLink";
-import Logo from "./Logo";
+import NavBar from "./NavBar";
+import Parallax from "./Parallax";
 
-const Hero = () => {
-  return (
+const HERO_ALT = "Homemade moussaka served at Aetos Greek Taverna";
+
+/**
+ * Full-viewport hero. On load the copy slides in from the left (staggered
+ * line by line) and the photo slides in from the right. Animations live in
+ * styles/globals.css and switch off for prefers-reduced-motion.
+ */
+const Hero = () => (
+  <Box
+    as="section"
+    className="hero"
+    bg="primary.codgray"
+    w="full"
+    minH="100vh"
+    display="flex"
+    flexDirection="column"
+    pos="relative"
+    overflow="hidden"
+    aria-label="Welcome"
+  >
+    <NavBar />
+
+    {/* Desktop image (lg+): fills the right side, top to bottom */}
     <Box
-      bg="primary.codgray"
-      w="full"
-      pos="relative"
-      role="region"
-      aria-label="Hero landmark"
-      scroll-behavior="smooth"
+      display={{ base: "none", lg: "block" }}
+      pos="absolute"
+      top="0"
+      bottom="0"
+      right="0"
+      w={{ lg: "50%", xl: "48%" }}
+      maxW="900px"
+      className="hero-image"
     >
-      {/* Hero bg image lg */}
+      <Parallax style={{ position: "absolute", inset: 0 }}>
+        <NextImage
+          src={heroDesktop}
+          alt={HERO_ALT}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="left center"
+          sizes="(min-width: 1440px) 48vw, 50vw"
+          placeholder="blur"
+          priority
+        />
+      </Parallax>
+      {/* Soft edge so the photo melts into the background */}
       <Box
-        display={{ base: "none", lg: "inline-flex" }}
-        w={{ lg: "600px", xl: "600px" }}
-        h="full"
         pos="absolute"
-        bottom="0"
-        right="0"
-        zIndex="base"
-        opacity={0.85}
-        // overflow="hidden"
+        inset="0"
+        bgGradient="linear(to-r, primary.codgray 0%, transparent 18%)"
+        pointerEvents="none"
+        aria-hidden="true"
+      />
+    </Box>
+
+    <Flex
+      flex="1"
+      direction="column"
+      justify={{ lg: "center" }}
+      w="full"
+      maxW={{ lg: "960px", xl: maxScreenWidth }}
+      mx="auto"
+      pos="relative"
+    >
+      {/* Mobile + tablet image (< lg) */}
+      <Box
+        display={{ base: "block", lg: "none" }}
+        mt={{ base: "72px", md: "100px" }}
+        className="hero-image"
       >
-        <Parallax>
-          <NextImage
-            className="header-logo"
-            src={dishImageDesktop}
-            alt="Dine hero desktop image"
-            objectFit="cover"
-            objectPosition="bottom"
-          />
-        </Parallax>
+        <NextImage
+          src={heroMobile}
+          alt={HERO_ALT}
+          layout="responsive"
+          sizes="100vw"
+          placeholder="blur"
+          priority
+        />
       </Box>
 
       <Flex
-        // pos="relative"
-        direction={{ base: "column", lg: "row" }}
-        mx="10"
-        justify="space-between"
-        boxSizing="content-box"
-        maxW={{ lg: "960px", xl: maxScreenWidth }}
+        direction="column"
+        align={{ base: "center", lg: "flex-start" }}
+        textAlign={{ base: "center", lg: "left" }}
+        pt={{ base: 6, md: 8, lg: "140px" }}
+        pb={{ base: 16, md: 24, lg: "100px" }}
+        px={{ base: 6, lg: 10, xl: 0 }}
+        maxW={{ lg: "520px" }}
       >
-        <NavBar />
-
-        {/* Hero bg image mobile */}
-        <Box
-          display={{ base: "inline-flex", md: "none" }}
-          mt="70px"
-          overflow="hidden"
-        >
-          <Parallax>
-            <NextImage src={dishImageMobile} alt="Dine hero mobile image" />
-          </Parallax>
-        </Box>
-
-        {/* Hero bg image tablet */}
-        <Box
-          display={{ base: "none", md: "inline-flex", lg: "none" }}
-          mt="70px"
-          overflow="hidden"
-        >
-          <Parallax>
-            <NextImage src={dishImageTablet} alt="Dine hero tablet image" />
-          </Parallax>
-        </Box>
-
-        {/* Hero content */}
-        <Flex
-          className="header"
-          w="100%"
-          direction="column"
-          pt={{ base: 10, sm: 12, md: 6, lg: 20, xl: "65px" }}
-          // padding for the main images
-          pb={{
-            base: "60px",
-            sm: "60px",
-            md: "220px",
-            lg: "220px",
-            xl: "200px",
-          }}
-          pl={{ base: 6, lg: 20, xl: 0 }}
-          pr={{ base: 6, lg: "0", xl: "0" }}
-          mx={{ base: "auto", lg: 0 }}
-          align={{ base: "center", lg: "flex-start" }}
-          textAlign={{ base: "center", lg: "left" }}
-          zIndex={0}
-        >
-          <Box
-            display={{ base: "none", lg: "block" }}
-            visibility="hidden"
-            h="auto"
-            opacity="0.75"
-            overflowX="hidden"
-            backgroundColor="primary.codgray"
-            mb={{ base: 0, lg: 4, xl: "150px" }}
-          >
-            <Logo />
-          </Box>
-          <Parallax>
-            <Flex direction="column" align="center">
+        <Parallax>
+          <Flex direction="column" align={{ base: "center", lg: "flex-start" }}>
+            <Box display="inline-block" mb="8">
               <Heading
                 as="h1"
-                variant="h1"
+                className="hero-reveal hero-reveal--1"
+                fontFamily="display"
+                fontWeight="normal"
                 color="white"
-                mb="10"
+                fontSize={{ base: "56px", sm: "68px", md: "88px", lg: "104px" }}
+                lineHeight="1"
+                letterSpacing="0.1em"
+                // Optical correction: trailing letter-spacing pushes the
+                // word left of centre on mobile.
+                mr="-0.1em"
                 pb="4"
-                pl="5"
-                maxW={{ md: "400px", lg: "500px", xl: "600px" }}
-                fontFamily="Baskerville"
-                fontSize={{ base: "90px", lg: "110px" }}
-                letterSpacing="10px"
-                shadow="0px 10px #e2a54a"
               >
                 AETOS
               </Heading>
+              <Box
+                className="hero-rule"
+                h="8px"
+                w="full"
+                bg="brand.goldDeep"
+                aria-hidden="true"
+              />
+            </Box>
 
-              <Text
-                color="white"
-                fontSize="20px"
-                textAlign="center"
-                textStyle={{ base: "body2", xl: "body1" }}
-                mb={{ base: 6, lg: 8, xl: 10 }}
-                maxW={{ base: "400px", xl: "500px" }}
-              >
-                <h1
-                  style={{
-                    textAlign: "center",
-                    fontSize: "40px",
-                    paddingTop: "16px",
-                  }}
-                >
-                  The perfect place{" "}
-                </h1>{" "}
-                <br /> to experience the rich flavours and hospitality of Greece
-              </Text>
+            <Text
+              className="hero-reveal hero-reveal--2"
+              color="white"
+              fontSize={{ base: "30px", md: "38px" }}
+              fontWeight="light"
+              lineHeight="1.2"
+              mb="3"
+            >
+              The perfect place
+            </Text>
+            <Text
+              className="hero-reveal hero-reveal--3"
+              color="whiteAlpha.800"
+              textStyle={{ base: "body2", xl: "body1" }}
+              fontSize={{ base: "17px", xl: "19px" }}
+              maxW="420px"
+              mb={{ base: 8, xl: 10 }}
+            >
+              to experience the rich flavours and hospitality of Greece
+            </Text>
 
-              <CustomLink
-                variant="dark"
-                href="#booking"
-                mb="20"
-              >
-                MAKE RESERVATION
+            <Box className="hero-reveal hero-reveal--4">
+              <CustomLink variant="dark" href="#booking">
+                Make reservation
               </CustomLink>
-              <Text
-                color="#fcbc5a"
-                fontSize="xl"
-                display={{ base: "block", md: "none" }}
-              >
-                156A Seven Sisters Road
-                <br />
-                N7 7PL, London, UK
-                <br />
-                02072635582
-                <br />
-              </Text>
-            </Flex>
-          </Parallax>
-        </Flex>
+            </Box>
+
+            <AddressBlock
+              className="hero-reveal hero-reveal--5"
+              display={{ base: "block", md: "none" }}
+              mt="12"
+              color="brand.gold"
+              fontSize="lg"
+            />
+          </Flex>
+        </Parallax>
       </Flex>
-    </Box>
-  );
-};
+    </Flex>
+  </Box>
+);
 
 export default Hero;

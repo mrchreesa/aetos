@@ -1,190 +1,88 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  useBreakpointValue,
-  chakra,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
-import PropTypes from "prop-types";
 
 import privateHire from "../assets/homepage/private-hire.jpg";
-import privateHireTab from "../assets/homepage/private-hire-tablet.jpg";
-import privateHireMob from "../assets/homepage/private-hire-mobile.jpg";
+import { maxScreenWidth } from "../constants/style";
 
 import CustomLink from "./CustomLink";
+import PatternLines from "./PatternLines";
+import PatternDivider from "./patterns/PatternDivider";
 
-const EventsContainer = () => {
-  const tabData = {
-    label: "Private Hire",
-    content:
-      "Our private hire option offers the perfect solution for those who want to celebrate a special occasion, host a corporate event, a birthday party, or throw a private party with friends and family. Our restaurant can be exclusively reserved for your party. We offer flexibility in terms of menu options, seating arrangements, and timing to ensure your event runs smoothly. Please contact us to discuss your private hire requirements, and our team will be happy to assist you in planning your perfect event.",
-    imageMobile: privateHireMob,
-    imageTablet: privateHireTab,
-    imageDesktop: privateHire,
-    imageAlt: "restaurant",
-  };
+const EventsContainer = () => (
+  <Box
+    as="section"
+    bg="white"
+    pos="relative"
+    overflow="hidden"
+    aria-labelledby="private-hire-heading"
+  >
+    <Box
+      display={{ base: "none", md: "block" }}
+      pos="absolute"
+      top="0"
+      left="0"
+      w="55%"
+      h="320px"
+      bg="rgba(92, 103, 121, 0.077)"
+      borderTopRightRadius="100px"
+      aria-hidden="true"
+    />
 
-  function DataTabs({ data }) {
-    const tabsOrientation = useBreakpointValue({
-      base: "vertical",
-      md: "horizontal",
-      xl: "vertical",
-    });
-
-    return (
-      <Tabs
-        isFitted
-        orientation={tabsOrientation}
-        variant="unstyled"
-        id="eventsTabs"
-        py={{ base: 16, md: 24, xl: 32 }}
+    <Flex
+      direction={{ base: "column", lg: "row" }}
+      align="center"
+      gridGap={{ base: 10, lg: 16, xl: 24 }}
+      py={{ base: 16, md: 24, xl: 32 }}
+      px={{ base: 6, md: 10, xl: 0 }}
+      maxW={{ lg: "960px", xl: maxScreenWidth }}
+      mx="auto"
+      pos="relative"
+    >
+      <Box
+        pos="relative"
+        flexShrink={0}
+        w={{ base: "full", md: "560px", lg: "460px", xl: "540px" }}
+        maxW="full"
       >
-        <Flex direction={{ base: "column", lg: "row" }} align="center">
-          <Flex>
-            <Box
-              w={{ base: "full", sm: tabData.imageMobile.width / 1.8 }}
-              h={{ base: "full", sm: tabData.imageMobile.height / 1.8 }}
-              shadow="2xl"
-              display={{ base: "inline-flex", md: "none" }}
-            >
-              <NextImage
-                placeholder="blur"
-                src={tabData.imageMobile}
-                width={tabData.imageMobile.width / 1.7}
-                height={tabData.imageMobile.height / 1.7}
-                alt={tabData.imageAlt}
-              />
-            </Box>
-            {/* image tablet version (md) */}
-            <Box
-              w={tabData.imageTablet.width / 2}
-              h={tabData.imageTablet.height / 2}
-              shadow="2xl"
-              display={{ base: "none", md: "block", xl: "none" }}
-              pos="relative"
-            >
-              <NextImage
-                placeholder="blur"
-                src={tabData.imageTablet}
-                width={tabData.imageTablet.width / 2}
-                height={tabData.imageTablet.height / 2}
-                alt={tabData.imageAlt}
-              />
-              <Box pos="absolute" top="-38px" left="-60px" w="160px" h="76px">
-                <NextImage
-                  src="/images/pattern-lines.svg"
-                  layout="fill"
-                  role="presentation"
-                  alt=""
-                />
-              </Box>
-            </Box>
-            <Box
-              display={{ base: "none", xl: "inline-flex" }}
-              pos="relative"
-              shadow="2xl"
-            >
-              <NextImage
-                placeholder="blur"
-                src={tabData.imageDesktop}
-                width={tabData.imageDesktop.width / 2}
-                height={tabData.imageDesktop.height / 2}
-                alt={tabData.imageAlt}
-              />
-              <Box pos="absolute" top="-38px" left="-40px" w="160px" h="76px">
-                <NextImage
-                  src="/images/pattern-lines.svg"
-                  layout="fill"
-                  role="presentation"
-                  alt=""
-                />
-              </Box>
-            </Box>
-          </Flex>
+        <PatternLines
+          display={{ base: "none", md: "block" }}
+          top="-38px"
+          left="-40px"
+          zIndex="1"
+        />
+        <Box shadow="2xl" overflow="hidden" lineHeight="0" pos="relative">
+          <NextImage
+            src={privateHire}
+            alt="The Aetos dining room set up for a private event"
+            layout="responsive"
+            sizes="(min-width: 1440px) 540px, (min-width: 1024px) 460px, (min-width: 768px) 560px, 100vw"
+            placeholder="blur"
+          />
+        </Box>
+      </Box>
 
-          <Flex
-            direction={{ base: "column", xl: "column-reverse" }}
-            pl={{ xl: 24 }}
-          >
-            <TabPanels>
-              <TabPanel textAlign={{ base: "center", xl: "left" }}>
-                <Flex
-                  direction="column"
-                  align={{ base: "center", xl: "flex-start" }}
-                >
-                  <Heading as="h2" variant="h2" mb="4" color="primary.codgray">
-                    {tabData.label}
-                  </Heading>
-                  <Flex justify="center">
-                    <Text
-                      textStyle={{ base: "body2", md: "body1" }}
-                      mb={{ base: 6, md: 8 }}
-                      maxW="457px"
-                      color="primary.codgray"
-                    >
-                      {tabData.content}
-                    </Text>
-                  </Flex>
-                  <CustomLink href="#booking" variant="black" mb={{ xl: 10 }}>
-                    Make reservation
-                  </CustomLink>
-                </Flex>
-              </TabPanel>
-            </TabPanels>
-          </Flex>
-        </Flex>
-      </Tabs>
-    );
-  }
-
-  return (
-    <Box bg="white">
-      <Box
-        bgImage="/images/pattern-curve-top-right.svg"
-        bgRepeat="no-repeat"
-        bgSize={{
-          md: "895px 320px",
-        }}
-        bgPos={{
-          md: "-520px 0",
-          lg: "-300px 0",
-          xl: "-355px 0",
-        }}
-      />
-      <Box
-        w="full"
-        h={{
-          md: "320px",
-        }}
-        pos="absolute"
-        bgImage="/images/pattern-curve-top-right.svg"
-        bgRepeat="no-repeat"
-        bgSize={{
-          md: "895px 320px",
-        }}
-        bgPos={{
-          md: "-520px 0",
-          lg: "-300px 0",
-          xl: "-355px 0",
-        }}
-      />
-
-      <Flex justify="center" role="region" aria-label="Events section">
-        <DataTabs data={tabData} />
+      <Flex
+        direction="column"
+        align={{ base: "center", lg: "flex-start" }}
+        textAlign={{ base: "center", lg: "left" }}
+        maxW={{ base: "560px", xl: "457px" }}
+      >
+        <PatternDivider mb={{ base: 8, lg: 10 }} />
+        <Heading as="h2" id="private-hire-heading" variant="h2" color="primary.codgray">
+          Private Hire
+        </Heading>
+        <Text textStyle={{ base: "body2", md: "body1" }} color="gray.700" mb={{ base: 8, md: 10 }}>
+          Celebrating a special occasion, hosting a corporate event or throwing a
+          party with friends and family? The whole restaurant can be reserved
+          exclusively for you, with flexible menus, seating and timings so your
+          event runs smoothly. Get in touch and our team will help you plan it.
+        </Text>
+        <CustomLink href="#booking" variant="black">
+          Make reservation
+        </CustomLink>
       </Flex>
-    </Box>
-  );
-};
-
-EventsContainer.propTypes = {
-  data: PropTypes.object,
-};
+    </Flex>
+  </Box>
+);
 
 export default EventsContainer;

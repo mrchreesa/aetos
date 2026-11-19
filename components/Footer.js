@@ -1,99 +1,74 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { Box, Flex, Link, Stack, Text } from "@chakra-ui/react";
 
+import { BUSINESS } from "../constants/business";
 import { maxScreenWidth } from "../constants/style";
-import insta from "../assets/brand/insta.png";
-import Image from "next/image";
 
+import { AddressBlock, HoursBlock, InstagramLink } from "./ContactInfo";
 import Logo from "./Logo";
 
-const Footer = () => {
-  const TextBlock = (props) => {
-    const { children } = props;
-
-    return (
-      <Box
-        textAlign={{ base: "center", md: "left" }}
-        textTransform="uppercase"
-        mb="6"
-        fontSize="14px"
-        letterSpacing="widest"
-        lineHeight="2"
-        {...props}
+const Footer = () => (
+  <Box as="footer" bg="primary.codgray" borderTop="1px solid" borderColor="#272727">
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      align={{ base: "center", md: "center" }}
+      justify="space-between"
+      gridGap="6"
+      px={{ base: 6, md: 8, xl: 0 }}
+      py={{ base: 10, md: 8 }}
+      mx="auto"
+      maxW={maxScreenWidth}
+      textAlign={{ base: "center", md: "left" }}
+    >
+      <Logo />
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        spacing={{ base: 5, md: 10 }}
+        align="center"
+        color="brand.gold"
+        fontSize="xs"
+        letterSpacing="wide"
       >
-        <Text color="white">{children}</Text>
-      </Box>
-    );
-  };
-
-  TextBlock.propTypes = {
-    children: PropTypes.array,
-  };
-
-  return (
-    <>
-      <Flex role="contentinfo" bg="primary.codgray">
-        <Flex
-          color="white"
-          // direction={{ base: "column", md: "row" }}
-          align={{ base: "center" }}
-          justify="space-between"
-          px={{ base: 6, md: 6, xl: 0 }}
-          // py={{ base: 2, xl: 4 }}
-          mx="auto"
-          maxW={maxScreenWidth}
-          w="100%"
-          overflowY="hidden"
+        <AddressBlock />
+        <HoursBlock />
+        <InstagramLink />
+      </Stack>
+    </Flex>
+    <Box
+      color="whiteAlpha.600"
+      fontSize="xs"
+      textAlign="center"
+      pb="6"
+      px="6"
+      lineHeight="1.8"
+    >
+      <Text color="inherit" fontSize="inherit">
+        © {new Date().getFullYear()} {BUSINESS.name}
+      </Text>
+      <Text color="inherit" fontSize="inherit" whiteSpace="nowrap">
+        Made with{" "}
+        <Box as="span" role="img" aria-label="love">
+          ♡
+        </Box>{" "}
+        by{" "}
+        <Link
+          href="https://www.webm8agency.com/"
+          isExternal
+          variant="basic"
+          p="0"
+          fontWeight="inherit"
+          fontSize="inherit"
+          letterSpacing="inherit"
+          textTransform="none"
+          color="inherit"
+          textDecoration="underline"
+          sx={{ textUnderlineOffset: "3px" }}
+          _hover={{ color: "white", textDecorationThickness: "2px" }}
         >
-          <Box>
-            <Logo />
-          </Box>
-
-          <Flex
-            justify="center"
-            textAlign="center"
-            align={{ base: "center" }}
-            // direction={{ base: "column", md: "row" }}
-            // display={{ base: "none", md: "flex" }}
-          >
-            <Text
-              color="#fcbc5a"
-              fontSize="xs"
-              display={{ base: "none", lg: "block" }}
-              mr="8"
-            >
-              156A Seven Sisters Road
-              <br />
-              N7 7PL, London, UK
-              <br />
-              02072635582
-              <br />
-            </Text>
-            <Text
-              color="#fcbc5a"
-              fontSize="xs"
-              display={{ base: "none", md: "block" }}
-            >
-              Opening Times <br />
-              SUN - THU: 10:00 AM - 11:00 PM
-              <br />
-              FRI - SAT: 10:00 AM - 02:00 AM
-              <br />
-            </Text>
-            <a
-              style={{ cursor: "pointer", marginLeft: 40 }}
-              rel="noopener noreferrer"
-              target="_blank"
-              href="http://www.instagram.com/aetos_loungetaverna"
-            >
-              <Image height={35} width={35} src={insta} alt="instagram" />
-            </a>
-          </Flex>
-        </Flex>
-      </Flex>
-      {/* <AuthorBanner /> */}
-    </>
-  );
-};
+          WebM8
+        </Link>
+      </Text>
+    </Box>
+  </Box>
+);
 
 export default Footer;

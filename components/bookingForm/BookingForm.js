@@ -1,385 +1,246 @@
-/* eslint-disable no-undef */
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import {
   Box,
   Button,
   Flex,
-  Heading,
-  Stack,
+  IconButton,
+  SimpleGrid,
   Text,
   useDisclosure,
+  useToast,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-
-import NextImage from "next/image";
-import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-import {
-  hoursList,
-  minutesList,
-  monthsList,
-  yearsList,
-} from "../../constants/datetime";
+import { BOOKING_HOURS } from "../../constants/business";
+import { getTimeSlots, toISODate, validateSlot } from "../../lib/booking";
 
 import BookingModal from "./BookingModal";
 import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
 
+const PHONE_PATTERN = /^\+?[0-9 ()-]{7,20}$/;
+
 const schema = yup.object().shape({
-  name: yup.string().required("A name is required"),
-  email: yup.string().email().required("An email is required"),
-  phone: yup.number().required("The phone number is required"),
-  month: yup.number().required(),
-  day: yup.number().required(),
-  year: yup.number().required(),
-  hour: yup.number().required(),
-  minute: yup.number().required(),
-  period: yup.string().required(),
+  name: yup.string().trim().required("Please enter your name").max(80),
+  email: yup
+    .string()
+    .trim()
+    .email("Please enter a valid email")
+    .required("Please enter your email"),
+  phone: yup
+    .string()
+    .trim()
+    .required("Please enter your phone number")
+    .matches(PHONE_PATTERN, "Please enter a valid phone number"),
+  date: yup.string().required("Please choose a date"),
+  time: yup
+    .string()
+    .required("Please choose a time")
+    .test("bookable", "Please choose another time", function check(time) {
+      const message = validateSlot(this.parent.date, time);
+      return message ? this.createError({ message }) : true;
+    }),
+  // Honeypot: real visitors never see or fill this in.
+  company: yup.string(),
 });
+
+const formatTime = (hhmm) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  const period = h >= 12 ? "pm" : "am";
+  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${period}`;
+};
 
 const BookingForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [seats, setSeats] = useState(1);
+  const toast = useToast();
+  const [guests, setGuests] = useState(2);
+  const [reservation, setReservation] = useState(null);
+  // Computed on the client only, so the server-rendered HTML has no
+  // timezone-dependent "today" baked into it.
+  const [today, setToday] = useState("");
+
+  useEffect(() => {
+    setToday(toISODate(new Date()));
+  }, []);
 
   const {
     handleSubmit,
     register,
     reset,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: { date: "", time: "", company: "" },
   });
 
-  const errorDate = errors.day || errors.month || errors.year;
-  const errorTime = errors.hour || errors.minute;
+  const selectedDate = watch("date");
+  const selectedTime = watch("time");
+  const slots = useMemo(() => getTimeSlots(selectedDate), [selectedDate]);
 
-  const [reservation, setReservation] = useState(null);
-  let reservationDate;
+  // Clear a time that is no longer valid after the date changes.
+  useEffect(() => {
+    if (selectedTime && !slots.includes(selectedTime)) setValue("time", "");
+  }, [slots, selectedTime, setValue]);
 
-  function onSubmit(values) {
-    return new Promise((resolve) => {
-      reservationDate = new Date(
-        values.year,
-        values.month - 1,
-        values.day,
-        values.hour,
-        values.minute
-      );
-      const updatedValues = { seats: seats, ...values };
-
-      setReservation(updatedValues);
-      axios
-        .post(`/api/contact`, updatedValues)
-        .then((response) => {
-          // setLoading(false);
-          console.log(response);
-          if (response.status === 201) {
-            setTimeout(() => {
-              resolve();
-              onOpen();
-              reset();
-              setSeats(1);
-            }, 1000);
-          } else {
-            setTimeout(() => {
-              alert("Something went wrong, please try again");
-              resolve();
-              reset();
-              setSeats(1);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setTimeout(() => {
-            alert("Something went wrong, please try again");
-            resolve();
-            reset();
-            setSeats(1);
-          }, 1000);
-        });
-    });
-  }
-
-  function handleSeatsDecrement() {
-    if (seats > 1) {
-      setSeats(seats - 1);
+  const onSubmit = async (values) => {
+    const payload = { ...values, guests };
+    try {
+      await axios.post("/api/contact", payload);
+      setReservation(payload);
+      onOpen();
+      reset();
+      setGuests(2);
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        "Please try again, or call us to book.";
+      toast({
+        title: "We couldn't send your request",
+        description: message,
+        status: "error",
+        duration: 8000,
+        isClosable: true,
+        position: "top",
+      });
     }
-  }
-
-  function handleSeatsIncrement() {
-    if (seats < 10) {
-      setSeats(seats + 1);
-    }
-  }
-
-  const CustomFormHeading = ({ title }) => (
-    <Flex
-      w={{ md: "200px" }}
-      direction="column"
-      align={{ base: "center", m: "flex-start" }}
-      justify={{ base: "flex-start", md: "center" }}
-    >
-      <Text
-        textStyle="body1"
-        color={errorDate || errorTime ? "red.500" : "primary.codgray"}
-      >
-        {title}
-      </Text>
-      <Text fontSize="11px" color="red.500">
-        {(errorDate || errorTime) && "This field is incomplete"}
-      </Text>
-    </Flex>
-  );
-
-  CustomFormHeading.propTypes = {
-    title: PropTypes.string,
   };
 
   return (
-    <Flex
-      pos="relative"
-      zIndex="overlay"
+    <Box
       w="full"
-      justify={{ base: "center", xl: "flex-end" }}
-      opacity="0.85"
+      maxW={{ base: "full", sm: "540px" }}
+      bg="white"
+      p={{ base: 6, md: 10, xl: 12 }}
+      shadow="2xl"
+      id="form"
     >
-      <Box
-        pos="absolute"
-        bottom={{ lg: "110px", xl: "90px" }}
-        right={{ lg: "670px", xl: "460px" }}
-        zIndex="base"
-        display={{ base: "none", lg: "block", xl: "block" }}
-      >
-        <NextImage
-          src="/images/pattern-lines.svg"
-          width="160px"
-          height="76px"
-          role="presentation"
-          alt=""
+      <BookingModal isOpen={isOpen} onClose={onClose} bookingData={reservation} />
+
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <CustomInput
+          id="name"
+          label="Name"
+          autoComplete="name"
+          error={errors.name}
+          {...register("name")}
         />
-      </Box>
-      <Box
-        bg="white"
-        w="full"
-        maxW={{ base: "full", sm: "540px" }}
-        p={{ base: 6, sm: 6, xl: 12 }}
-        shadow="2xl"
-        pos="relative"
-        // top={{ base: '-140px', xl: '-340px' }}
-        id="form"
-        h={{ sm: "max-content" }}
-      >
-        <BookingModal
-          isOpen={isOpen}
-          onClose={onClose}
-          bookingData={reservation}
+        <CustomInput
+          id="email"
+          label="Email"
+          type="email"
+          autoComplete="email"
+          inputMode="email"
+          error={errors.email}
+          {...register("email")}
+        />
+        <CustomInput
+          id="phone"
+          label="Phone"
+          type="tel"
+          autoComplete="tel"
+          inputMode="tel"
+          error={errors.phone}
+          {...register("phone")}
         />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Name */}
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacingX="4">
           <CustomInput
-            id="name"
-            placeholder="Name"
-            errorName={errors?.name}
-            errorMessage={errors?.name?.message}
-            register={{
-              ...register("name", {
-                required: "This is required",
-              }),
-            }}
+            id="date"
+            label="Date"
+            type="date"
+            min={today || undefined}
+            error={errors.date}
+            {...register("date")}
           />
-
-          {/* Email */}
-          <CustomInput
-            id="email"
-            placeholder="Email"
-            errorName={errors?.email}
-            errorMessage={errors?.email?.message}
-            register={{
-              ...register("email", {
-                required: "This is required",
-              }),
-            }}
-          />
-          {/* Phone */}
-          <CustomInput
-            id="phone"
-            placeholder="Phone"
-            errorName={errors?.phone}
-            errorMessage={errors?.phone?.message}
-            register={{
-              ...register("phone", {
-                required: "This is required",
-              }),
-            }}
-          />
-          {/* Date */}
-          <Flex direction={{ base: "column", md: "row" }} mb="8">
-            <CustomFormHeading title="Pick a date" />
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              spacing="4"
-              w="full"
-            >
-              {/* Day */}
-              <CustomInput
-                id="day"
-                placeholder="DD"
-                errorName={errors?.day}
-                errorMessage={errors?.day?.message}
-                showErrorMessage={false}
-                register={{
-                  ...register("day", {
-                    required: "This is required",
-                  }),
-                }}
-                min="1"
-                max="31"
-                type="number"
-              />
-              {/* Month */}
-              <CustomSelect
-                id="month"
-                placeholder="MM"
-                errorName={errors?.month}
-                register={{
-                  ...register("month", {
-                    required: "This is required",
-                  }),
-                }}
-              >
-                {monthsList.map((month, index) => (
-                  <option value={month} key={index}>
-                    {month}
-                  </option>
-                ))}
-              </CustomSelect>
-              {/* Year */}
-              <CustomSelect
-                id="year"
-                placeholder="YY"
-                errorName={errors?.year}
-                register={{
-                  ...register("year", {
-                    required: "This is required",
-                  }),
-                }}
-              >
-                {yearsList.map((year, index) => (
-                  <option value={year} key={index}>
-                    {year}
-                  </option>
-                ))}
-              </CustomSelect>
-            </Stack>
-          </Flex>
-
-          {/* Time */}
-          <Flex direction={{ base: "column", md: "row" }} mb="8">
-            <CustomFormHeading title="Pick a time" />
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              spacing="4"
-              w="full"
-            >
-              {/* Hour */}
-              <CustomSelect
-                id="hour"
-                placeholder="HH"
-                errorName={errors?.hour}
-                register={{
-                  ...register("hour", {
-                    required: "This is required",
-                  }),
-                }}
-              >
-                {hoursList.map((hour, index) => (
-                  <option value={hour} key={index}>
-                    {hour}
-                  </option>
-                ))}
-              </CustomSelect>
-
-              {/* Minute */}
-              <CustomSelect
-                id="minute"
-                placeholder="MN"
-                errorName={errors?.minute}
-                register={{
-                  ...register("minute", {
-                    required: "This is required",
-                  }),
-                }}
-              >
-                {minutesList.map((minute, index) => (
-                  <option value={minute} key={index}>
-                    {minute}
-                  </option>
-                ))}
-              </CustomSelect>
-
-              {/* Period Selector */}
-              <CustomSelect
-                id="period"
-                defaultValue="AM"
-                errorName={errors?.period}
-                register={{
-                  ...register("period", {
-                    required: "This is required",
-                  }),
-                }}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </CustomSelect>
-            </Stack>
-          </Flex>
-
-          {/* Seats */}
-          <Flex
-            mb="6"
-            borderBottom="1px"
-            borderBottomColor="secondary.flushedgray"
-            w="full"
-            direction={{ base: "column", sm: "row" }}
-            justify="space-between"
-            align="center"
+          <CustomSelect
+            id="time"
+            label="Time"
+            placeholder={selectedDate ? "Time" : "Time (pick a date first)"}
+            isDisabled={!selectedDate || slots.length === 0}
+            error={errors.time}
+            {...register("time")}
           >
-            <Button
-              variant="flushed"
-              borderBottomColor="secondary.flushedgray"
-              onClick={handleSeatsDecrement}
-            >
-              -
-            </Button>
-            <Heading as="p" variant="h3l">
-              {seats} people
-            </Heading>
-            <Button
-              variant="flushed"
-              borderBottomColor="secondary.flushedgray"
-              onClick={handleSeatsIncrement}
-            >
-              +
-            </Button>
-          </Flex>
+            {slots.map((slot) => (
+              <option key={slot} value={slot}>
+                {formatTime(slot)}
+              </option>
+            ))}
+          </CustomSelect>
+        </SimpleGrid>
 
-          <Button
-            variant="black"
-            type="submit"
-            w="full"
-            display="flex"
-            isLoading={isSubmitting}
+        {/* Honeypot field, hidden from people and assistive tech */}
+        <VisuallyHidden aria-hidden="true">
+          <label htmlFor="company">Company</label>
+          <input
+            id="company"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register("company")}
+          />
+        </VisuallyHidden>
+
+        <Flex
+          mb="8"
+          borderBottom="1px"
+          borderBottomColor="secondary.flushedgray"
+          justify="space-between"
+          align="center"
+          role="group"
+          aria-labelledby="guests-label"
+        >
+          <IconButton
+            variant="flushed"
+            size="sm"
+            h="48px"
+            minW="48px"
+            fontSize="2xl"
+            aria-label="Remove a guest"
+            icon={<span aria-hidden="true">−</span>}
+            onClick={() => setGuests((g) => Math.max(1, g - 1))}
+            isDisabled={guests <= 1}
+          />
+          <Text
+            id="guests-label"
+            fontWeight="bold"
+            fontSize="lg"
+            aria-live="polite"
           >
-            Make reservation
-          </Button>
-        </form>
-      </Box>
-    </Flex>
+            {guests} {guests === 1 ? "guest" : "guests"}
+          </Text>
+          <IconButton
+            variant="flushed"
+            size="sm"
+            h="48px"
+            minW="48px"
+            fontSize="2xl"
+            aria-label="Add a guest"
+            icon={<span aria-hidden="true">+</span>}
+            onClick={() =>
+              setGuests((g) => Math.min(BOOKING_HOURS.maxGuests, g + 1))
+            }
+            isDisabled={guests >= BOOKING_HOURS.maxGuests}
+          />
+        </Flex>
+
+        <Button
+          variant="black"
+          type="submit"
+          w="full"
+          isLoading={isSubmitting}
+          loadingText="Sending"
+        >
+          Request booking
+        </Button>
+      </form>
+    </Box>
   );
 };
 
